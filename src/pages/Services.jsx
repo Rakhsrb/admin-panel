@@ -1,7 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const Services = () => {
+  const { services } = useSelector((state) => state.mainSlice);
+  const { data } = services;
   return (
     <section className="h-full p-5 bg-cyan-50">
       <div className="h-[20vh] flex justify-between items-center">
@@ -14,7 +17,7 @@ export const Services = () => {
         </Link>
       </div>
       <table className="w-full">
-        <thead>
+        <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Title</th>
             <th className="p-4">Image</th>
@@ -23,53 +26,35 @@ export const Services = () => {
             <th className="p-4">Actions</th>
           </tr>
         </thead>
-        <tbody className="text-center">
-          <tr className="border-2 border-cyan-900">
-            <td className="p-4">Web sayt</td>
-            <td className="p-4 flex justify-center">
-              <img
-                className="w-[100px] h-[40px] object-cover"
-                src="https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/2EP14mWkbx9sq03nWnRSGT/f1d22d88bb5dde030275f9520c0f2e92/React_YT_Thumbnail.png"
-                alt=""
-              />
-            </td>
-            <td>sdfdfdgfdglkfjglfkdgjlk</td>
-            <td className="p-4">suhrobrahmatullayev973132@gmail.com</td>
-            <td className="p-4 flex gap-4 justify-center items-center">
-              <Link className="bg-green-900 text-white rounded-md px-2">
-                View
-              </Link>
-              <Link className="bg-cyan-900 text-white rounded-md px-2">
-                Edit
-              </Link>
-              <button className="bg-red-800 text-white rounded-md px-2">
-                Delete
-              </button>
-            </td>
-          </tr>
-          <tr className="border-2 border-cyan-900">
-            <td className="p-4">Web sayt</td>
-            <td className="p-4 flex justify-center">
-              <img
-                className="w-[100px] h-[40px] object-cover"
-                src="https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/2EP14mWkbx9sq03nWnRSGT/f1d22d88bb5dde030275f9520c0f2e92/React_YT_Thumbnail.png"
-                alt=""
-              />
-            </td>
-            <td>sdfdfdgfdglkfjglfkdgjlk</td>
-            <td className="p-4">suhrobrahmatullayev973132@gmail.com</td>
-            <td className="p-4 flex gap-4 justify-center items-center">
-              <Link className="bg-green-900 text-white rounded-md px-2">
-                View
-              </Link>
-              <Link className="bg-cyan-900 text-white rounded-md px-2">
-                Edit
-              </Link>
-              <button className="bg-red-800 text-white rounded-md px-2">
-                Delete
-              </button>
-            </td>
-          </tr>
+        <tbody>
+          {data.length > 0 ? (
+            data.map((elem) => (
+              <tr
+                key={elem.id}
+                className="text-center border-2 border-cyan-800"
+              >
+                <td>{elem.title}</td>
+                <td className="flex justify-center">
+                  <img src={elem.image} alt="" />
+                </td>
+                <td>{elem.description}</td>
+                <td>{elem.category}</td>
+                <td>
+                  <Link className="bg-green-900 text-white rounded-md p-2">
+                    View
+                  </Link>
+                  <Link className="bg-cyan-900 text-white rounded-md p-2 mx-3">
+                    Edit
+                  </Link>
+                  <button className="bg-red-800 text-white rounded-md p-2">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <h1>No Data...</h1>
+          )}
         </tbody>
       </table>
     </section>

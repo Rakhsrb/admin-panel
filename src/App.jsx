@@ -2,16 +2,16 @@ import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./layout/RootLayout";
 import AddAdmin from "./pages/AddAdmin";
+import AddCourses from "./pages/AddCourses";
+import AddProjects from "./pages/AddProjects";
+import AddServices from "./pages/AddServices";
+import AddWorker from "./pages/AddWorker";
 import { Admins } from "./pages/Admins";
 import { Courses } from "./pages/Courses";
 import { Dashboard } from "./pages/Dashboard";
 import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
-import AddCourses from "./pages/AddCourses";
-import AddProjects from "./pages/AddProjects";
-import AddServices from "./pages/AddServices";
-import AddTeam from "./pages/AddTeam";
 
 function App() {
   const router = createBrowserRouter([
@@ -43,6 +43,7 @@ function App() {
           path: "/team",
           element: <Team />,
         },
+        //add paths
         {
           path: "/add-admin",
           element: <AddAdmin />,
@@ -61,7 +62,28 @@ function App() {
         },
         {
           path: "/add-worker",
-          element: <AddTeam />,
+          element: <AddWorker />,
+        },
+        //edit paths
+        {
+          path: "/add-admin",
+          element: <AddAdmin />,
+        },
+        {
+          path: "/add-course",
+          element: <AddCourses />,
+        },
+        {
+          path: "/add-portfolio",
+          element: <AddProjects />,
+        },
+        {
+          path: "/add-service",
+          element: <AddServices />,
+        },
+        {
+          path: "/add-worker",
+          element: <AddWorker />,
         },
       ],
     },

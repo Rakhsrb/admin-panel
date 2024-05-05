@@ -45,3 +45,15 @@ input::-webkit-inner-spin-button {
 
   appearance: none;
 }
+
+thead {
+  background-color: #5299a3;
+}
+
+table td {
+  padding: 20px 10px;
+}
+
+table td img {
+  width: 60px;
+}

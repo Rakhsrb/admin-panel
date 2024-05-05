@@ -1,7 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const Admins = () => {
+  const { admins } = useSelector((state) => state.mainSlice);
+  const { data } = admins;
   return (
     <section className="h-full p-5 bg-cyan-50">
       <div className="h-[20vh] flex justify-between items-center">
@@ -14,7 +17,7 @@ export const Admins = () => {
         </Link>
       </div>
       <table className="w-full">
-        <thead>
+        <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Name</th>
             <th className="p-4">Email</th>
@@ -22,36 +25,30 @@ export const Admins = () => {
           </tr>
         </thead>
         <tbody className="text-center">
-          <tr className="border-2 border-cyan-900">
-            <td className="p-4">Suhrob</td>
-            <td className="p-4">suhrobrahmatullayev973132@gmail.com</td>
-            <td className="p-4 flex gap-4 justify-center items-center">
-              <Link className="bg-green-900 text-white rounded-md px-2">
-                View
-              </Link>
-              <Link className="bg-cyan-900 text-white rounded-md px-2">
-                Edit
-              </Link>
-              <button className="bg-red-800 text-white rounded-md px-2">
-                Delete
-              </button>
-            </td>
-          </tr>
-          <tr className="border-2 border-cyan-900">
-            <td className="p-4">Murod</td>
-            <td className="p-4">Admin@gmail.com</td>
-            <td className="p-4 flex gap-4 justify-center items-center">
-              <Link className="bg-green-900 text-white rounded-md px-2">
-                View
-              </Link>
-              <Link className="bg-cyan-900 text-white rounded-md px-2">
-                Edit
-              </Link>
-              <button className="bg-red-800 text-white rounded-md px-2">
-                Delete
-              </button>
-            </td>
-          </tr>
+          {data.length > 0 ? (
+            data.map((elem) => (
+              <tr
+                key={elem.id}
+                className="text-center border-2 border-cyan-800"
+              >
+                <td>{elem.name}</td>
+                <td>{elem.email}</td>
+                <td>
+                  <Link className="bg-green-900 text-white rounded-md p-2">
+                    View
+                  </Link>
+                  <Link className="bg-cyan-900 text-white rounded-md p-2 mx-3">
+                    Edit
+                  </Link>
+                  <button className="bg-red-800 text-white rounded-md p-2">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <h1>No Data...</h1>
+          )}
         </tbody>
       </table>
     </section>
