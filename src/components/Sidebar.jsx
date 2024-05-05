@@ -46,7 +46,7 @@ export const Sidebar = () => {
     <aside className="bg-cyan-950">
       <ul className="flex flex-col">
         {navLinks.map((item, index) => (
-          <li>
+          <li key={index + 1}>
             <Link
               to={item.to}
               className="flex items-center gap-2 text-xl text-white hover:bg-cyan-700 p-5"

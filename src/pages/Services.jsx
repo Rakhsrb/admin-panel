@@ -4,8 +4,14 @@ import { Link } from "react-router-dom";
 export const Services = () => {
   return (
     <section className="h-full p-5 bg-cyan-50">
-      <div className="h-[20vh] flex items-center justify-center">
+      <div className="h-[20vh] flex justify-between items-center">
         <h1 className="text-5xl">Xizmatlar</h1>
+        <Link
+          to={"/add-service"}
+          className="bg-green-600 py-3 px-5 rounded-md text-white font-semibold"
+        >
+          Xizmatlar qo'shish
+        </Link>
       </div>
       <table className="w-full">
         <thead>

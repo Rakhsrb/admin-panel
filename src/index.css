@@ -38,3 +38,10 @@ body {
   display: grid;
   grid-template-columns: 1fr 4fr;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+
+  appearance: none;
+}

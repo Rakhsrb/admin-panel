@@ -4,8 +4,14 @@ import { Link } from "react-router-dom";
 export const Team = () => {
   return (
     <section className="h-full p-5 bg-cyan-50">
-      <div className="h-[20vh] flex items-center justify-center">
-        <h1 className="text-5xl">Xodimlar</h1>
+      <div className="h-[20vh] flex justify-between items-center">
+        <h1 className="text-5xl">Xodimalar</h1>
+        <Link
+          to={"/add-worker"}
+          className="bg-green-600 py-3 px-5 rounded-md text-white font-semibold"
+        >
+          Yangi xodimlar qo'shish
+        </Link>
       </div>
       <table className="w-full">
         <thead>

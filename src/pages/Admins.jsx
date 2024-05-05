@@ -4,8 +4,14 @@ import { Link } from "react-router-dom";
 export const Admins = () => {
   return (
     <section className="h-full p-5 bg-cyan-50">
-      <div className="h-[20vh] flex items-center justify-center">
+      <div className="h-[20vh] flex justify-between items-center">
         <h1 className="text-5xl">Adminlar</h1>
+        <Link
+          to={"/add-admin"}
+          className="bg-green-600 py-3 px-5 rounded-md text-white font-semibold"
+        >
+          Yangi Admin Qo'shish
+        </Link>
       </div>
       <table className="w-full">
         <thead>
