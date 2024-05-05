@@ -9,6 +9,22 @@
   font-family: "Chakra Petch", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c1c1c1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(8, 54, 72);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: slategray;
+}
+
 body {
   background: #ffffff;
 }

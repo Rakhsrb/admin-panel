@@ -3,20 +3,41 @@ import { createSlice } from "@reduxjs/toolkit";
 const Reducer = createSlice({
   name: "uitc",
   initialState: {
-    admins: [],
-    courses: [],
-    portfolio: [],
-    services: [],
-    team: [],
+    admins: {
+      isPending: false,
+      data: [],
+      isError: false,
+    },
+    courses: {
+      isPending: false,
+      data: [],
+      isError: false,
+    },
+    portfolio: {
+      isPending: false,
+      data: [],
+      isError: false,
+    },
+    services: {
+      isPending: false,
+      data: [],
+      isError: false,
+    },
+    team: {
+      isPending: false,
+      data: [],
+      isError: false,
+    },
   },
   reducers: {
     getAdmins() {},
-    addForm() {},
-    editForm() {},
-    deleteForm() {},
-    getForm() {},
+    getCourses() {},
+    getProjects() {},
+    getServices() {},
+    getTeam() {},
   },
 });
 
-export const { addForm, editForm, deleteForm, getForm } = Reducer.actions;
+export const { getAdmins, getCourses, getProjects, getServices, getTeam } =
+  Reducer.actions;
 export default Reducer.reducer;
