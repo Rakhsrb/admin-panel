@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateAdminInfo } from "../toolkit/Slicer";
 
-const AddAdmin = () => {
+const EditAdmin = () => {
+  const dispatch = useDispatch();
+  const path = useNavigate();
+  const [editedAdmin, setEditedAdmin] = useState({
+    name: "",
+    email: "",
+  });
+  const { admins } = useSelector((state) => state.mainSlice);
+  const { data } = admins;
+  const adminID = useParams().id;
+  const admin = data.find((item) => item.id === +adminID);
+
+  const getUpdatedValues = (e) => {
+    setEditedAdmin({
+      ...editedAdmin,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitUpdatedInfo = (e) => {
+    e.preventDefault();
+    dispatch(updateAdminInfo(editedAdmin));
+  };
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
-      <form className="border p-10 rounded-md bg-white">
-        <h1 className="text-4xl font-semibold mb-7">Yangi admin qo'shish</h1>
+      <form
+        className="border p-10 rounded-md bg-white"
+        onSubmit={submitUpdatedInfo}
+      >
+        <h1 className="text-4xl font-semibold mb-7">
+          Admin malumotlarini yangilash
+        </h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label htmlFor="adminName" className="text-lg">
@@ -17,6 +47,8 @@ const AddAdmin = () => {
               className="border py-2 px-5 text-md"
               id="adminName"
               name="name"
+              value={admin.name}
+              onChange={getUpdatedValues}
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -30,30 +62,32 @@ const AddAdmin = () => {
               className="border py-2 px-5 text-md"
               id="adminEmail"
               name="email"
+              value={admin.email}
+              onChange={getUpdatedValues}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <label htmlFor="adminPassword" className="text-lg">
-              Parol
+              Parol:
             </label>
             <input
-              required
               type="password"
               placeholder="Parol kiriting"
               className="border py-1 px-5 text-lg"
               id="adminPassword"
             />
-          </div>
+          </div> */}
         </div>
         <button
+          onClick={path("/admins")}
           type="submit"
           className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
         >
-          Qo'shish
+          yangilash
         </button>
       </form>
     </section>
   );
 };
 
-export default AddAdmin;
+export default EditAdmin;

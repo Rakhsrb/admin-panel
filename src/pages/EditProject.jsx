@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddProjects = () => {
+const EditProject = () => {
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form className="border p-10 rounded-md bg-white">
@@ -87,4 +87,4 @@ const AddProjects = () => {
   );
 };
 
-export default AddProjects;
+export default EditProject;

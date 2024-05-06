@@ -33,7 +33,9 @@ export const Team = () => {
                 className="text-center border-2 border-cyan-800"
               >
                 <td>{elem.name}</td>
-                <td className="flex justify-center"><img src={elem.image} alt="" /></td>
+                <td className="flex justify-center">
+                  <img src={elem.image} alt="" />
+                </td>
                 <td>{elem.job}</td>
                 <td>
                   <Link className="bg-green-900 text-white rounded-md p-2">

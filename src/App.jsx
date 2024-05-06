@@ -9,6 +9,11 @@ import AddWorker from "./pages/AddWorker";
 import { Admins } from "./pages/Admins";
 import { Courses } from "./pages/Courses";
 import { Dashboard } from "./pages/Dashboard";
+import EditAdmin from "./pages/EditAdmin";
+import EditCourse from "./pages/EditCourse";
+import EditProject from "./pages/EditProject";
+import EditService from "./pages/EditServices";
+import EditWorker from "./pages/EditWorker";
 import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
@@ -66,24 +71,24 @@ function App() {
         },
         //edit paths
         {
-          path: "/add-admin",
-          element: <AddAdmin />,
+          path: "/add-admin/:id",
+          element: <EditAdmin />,
         },
         {
-          path: "/add-course",
-          element: <AddCourses />,
+          path: "/add-course/:id",
+          element: <EditCourse />,
         },
         {
-          path: "/add-portfolio",
-          element: <AddProjects />,
+          path: "/add-portfolio/:id",
+          element: <EditProject />,
         },
         {
-          path: "/add-service",
-          element: <AddServices />,
+          path: "/add-service/:id",
+          element: <EditService />,
         },
         {
-          path: "/add-worker",
-          element: <AddWorker />,
+          path: "/add-worker/:id",
+          element: <EditWorker />,
         },
       ],
     },

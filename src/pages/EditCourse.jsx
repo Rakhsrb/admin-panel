@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddCourses = () => {
+const EditCourse = () => {
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form className="border p-10 rounded-md bg-white">
@@ -67,4 +67,4 @@ const AddCourses = () => {
   );
 };
 
-export default AddCourses;
+export default EditCourse;

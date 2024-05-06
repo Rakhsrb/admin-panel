@@ -138,9 +138,29 @@ const MainSlice = createSlice({
     getProjects() {},
     getServices() {},
     getTeam() {},
+
+    updateAdminInfo: (state, { payload }) => {
+      state = {
+        ...state,
+        admins: {
+          ...state.admins,
+          data: state.admins.data.map((admin) =>
+            admin.id === payload.id
+              ? { ...admin, name: payload.name, email: payload.email }
+              : admin
+          ),
+        },
+      };
+    },
   },
 });
 
-export const { getAdmins, getCourses, getProjects, getServices, getTeam } =
-  MainSlice.actions;
+export const {
+  getAdmins,
+  getCourses,
+  getProjects,
+  getServices,
+  getTeam,
+  updateAdminInfo,
+} = MainSlice.actions;
 export default MainSlice.reducer;
