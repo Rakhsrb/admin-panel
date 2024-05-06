@@ -6,14 +6,15 @@ import { updateAdminInfo } from "../toolkit/Slicer";
 const EditAdmin = () => {
   const dispatch = useDispatch();
   const path = useNavigate();
-  const [editedAdmin, setEditedAdmin] = useState({
-    name: "",
-    email: "",
-  });
   const { admins } = useSelector((state) => state.mainSlice);
   const { data } = admins;
   const adminID = useParams().id;
   const admin = data.find((item) => item.id === +adminID);
+  const [editedAdmin, setEditedAdmin] = useState({
+    id: adminID,
+    name: admin.name,
+    email: admin.email,
+  });
 
   const getUpdatedValues = (e) => {
     setEditedAdmin({
@@ -25,6 +26,8 @@ const EditAdmin = () => {
   const submitUpdatedInfo = (e) => {
     e.preventDefault();
     dispatch(updateAdminInfo(editedAdmin));
+    path("/admins");
+    // console.log(editedAdmin);
   };
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
@@ -47,7 +50,7 @@ const EditAdmin = () => {
               className="border py-2 px-5 text-md"
               id="adminName"
               name="name"
-              value={admin.name}
+              value={editedAdmin.name}
               onChange={getUpdatedValues}
             />
           </div>
@@ -62,7 +65,7 @@ const EditAdmin = () => {
               className="border py-2 px-5 text-md"
               id="adminEmail"
               name="email"
-              value={admin.email}
+              value={editedAdmin.email}
               onChange={getUpdatedValues}
             />
           </div>
@@ -79,7 +82,6 @@ const EditAdmin = () => {
           </div> */}
         </div>
         <button
-          onClick={path("/admins")}
           type="submit"
           className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
         >

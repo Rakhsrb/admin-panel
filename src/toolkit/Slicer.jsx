@@ -145,12 +145,13 @@ const MainSlice = createSlice({
         admins: {
           ...state.admins,
           data: state.admins.data.map((admin) =>
-            admin.id === payload.id
+            admin.id === +payload.id
               ? { ...admin, name: payload.name, email: payload.email }
               : admin
           ),
         },
       };
+      return state
     },
   },
 });
