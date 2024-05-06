@@ -8,7 +8,7 @@ export const Admins = () => {
   let path = useNavigate();
 
   function toEditPage(admin) {
-    path(`/add-admin/${admin.id}`);
+    path(`/edit-admin/${admin.id}`);
   }
   return (
     <section className="h-full p-5 bg-cyan-50">

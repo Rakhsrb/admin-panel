@@ -4,7 +4,7 @@ const AddServices = () => {
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form className="border p-10 rounded-md bg-white">
-        <h1 className="text-4xl font-semibold mb-7">Yangi Kurs Qo'shish</h1>
+        <h1 className="text-4xl font-semibold mb-7">Yangi Xizmat Qo'shish</h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label htmlFor="serviceTitle" className="text-lg">

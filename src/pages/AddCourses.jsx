@@ -37,7 +37,7 @@ const AddCourses = () => {
             </label>
             <input
               required
-              type="number"
+              type="text"
               placeholder="Kurs narxini kiriting"
               className="border py-1 px-5 text-lg "
               id="coursePrice"

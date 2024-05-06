@@ -1,10 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Projects = () => {
   const { portfolio } = useSelector((state) => state.mainSlice);
   const { data } = portfolio;
+  let path = useNavigate();
+
+  function toEditPage(portfolio) {
+    path(`/edit-portfolio/${portfolio.id}`);
+  }
   return (
     <section className="h-full p-5 bg-cyan-50">
       <div className="h-[20vh] flex justify-between items-center">
@@ -41,7 +46,10 @@ export const Projects = () => {
                   <Link className="bg-green-900 text-white rounded-md p-2">
                     View
                   </Link>
-                  <Link className="bg-cyan-900 text-white rounded-md p-2 mx-3">
+                  <Link
+                    onClick={() => toEditPage(elem)}
+                    className="bg-cyan-900 text-white rounded-md p-2 mx-3"
+                  >
                     Edit
                   </Link>
                   <button className="bg-red-800 text-white rounded-md p-2">

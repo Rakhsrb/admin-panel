@@ -1,6 +1,8 @@
-import React from "react";
+import { Eye, EyeClosed } from "@phosphor-icons/react";
+import React, { useState } from "react";
 
 const AddAdmin = () => {
+  const [showPass, setShowPass] = useState(false);
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form className="border p-10 rounded-md bg-white">
@@ -36,13 +38,22 @@ const AddAdmin = () => {
             <label htmlFor="adminPassword" className="text-lg">
               Parol
             </label>
-            <input
-              required
-              type="password"
-              placeholder="Parol kiriting"
-              className="border py-1 px-5 text-lg"
-              id="adminPassword"
-            />
+            <div className="border py-1 px-5 text-lg flex items-center gap-3">
+              <input
+                required
+                type={showPass ? "text" : "password"}
+                placeholder="Parol kiriting"
+                className="outline-none w-full"
+                id="adminPassword"
+              />
+              <span
+                onClick={() =>
+                  showPass ? setShowPass(false) : setShowPass(true)
+                }
+              >
+                {showPass ? <Eye /> : <EyeClosed />}
+              </span>
+            </div>
           </div>
         </div>
         <button

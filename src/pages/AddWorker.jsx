@@ -26,10 +26,10 @@ const AddWorker = () => {
             <input
               required
               placeholder="ish kiriting"
-              type="email"
+              type="text"
               className="border py-2 px-5 text-md"
               id="workerJob"
-              name="email"
+              name="text"
             />
           </div>
           <div className="flex flex-col gap-2">

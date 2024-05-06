@@ -1,10 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { updatePortfolioInfo } from "../toolkit/Slicer";
 
 const EditProject = () => {
+  const dispatch = useDispatch();
+  const path = useNavigate();
+  const { portfolio } = useSelector((state) => state.mainSlice);
+  const { data } = portfolio;
+  const portdolioID = useParams().id;
+  const portdolio = data.find((item) => item.id === +portdolioID);
+  const [editedPortfolio, setEditedPortfolio] = useState({
+    id: portdolioID,
+    title: portdolio.title,
+    price: portdolio.price,
+    description: portdolio.description,
+    image: portdolio.image,
+    category: portdolio.category,
+    url: portdolio.url,
+  });
+
+  const getUpdatedValues = (e) => {
+    if (e.target.type === "file") {
+      setEditedPortfolio({
+        ...editedPortfolio,
+        image: URL.createObjectURL(e.target.files[0]),
+      });
+    } else {
+      setEditedPortfolio({
+        ...editedPortfolio,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+
+  const submitUpdatedInfo = (e) => {
+    e.preventDefault();
+    dispatch(updatePortfolioInfo(editedPortfolio));
+    path("/projects");
+  };
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
-      <form className="border p-10 rounded-md bg-white">
-        <h1 className="text-4xl font-semibold mb-7">Portfolio Qo'shish</h1>
+      <form
+        className="border p-10 rounded-md bg-white"
+        onSubmit={submitUpdatedInfo}
+      >
+        <h1 className="text-4xl font-semibold mb-7">Portfolio Ynagilash</h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label htmlFor="portfolioTitle" className="text-lg">
@@ -17,6 +58,8 @@ const EditProject = () => {
               className="border py-2 px-5 text-md"
               id="portfolioTitle"
               name="title"
+              value={editedPortfolio.title}
+              onChange={getUpdatedValues}
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -29,6 +72,8 @@ const EditProject = () => {
               className="border py-2 px-5 text-md min-h-32"
               id="portfolioDescription"
               name="description"
+              value={editedPortfolio.description}
+              onChange={getUpdatedValues}
             ></textarea>
           </div>
           <div className="grid grid-cols-2 gap-5 items-center">
@@ -40,6 +85,8 @@ const EditProject = () => {
                 className="border py-2 px-2"
                 name="category"
                 id="portfolioCategory"
+                value={editedPortfolio.category}
+                onChange={getUpdatedValues}
               >
                 <option value="" hidden>
                   Kategoriya tanlang
@@ -60,6 +107,8 @@ const EditProject = () => {
                 className="border py-1 px-5 text-lg "
                 id="courseUrl"
                 name="url"
+                value={editedPortfolio.url}
+                onChange={getUpdatedValues}
               />
             </div>
           </div>
@@ -68,11 +117,11 @@ const EditProject = () => {
               Rasm:
             </label>
             <input
-              required
               type="file"
               className="border py-1 px-5 text-lg "
               id="courseImage"
               name="image"
+              onChange={getUpdatedValues}
             />
           </div>
         </div>
@@ -80,7 +129,7 @@ const EditProject = () => {
           type="submit"
           className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
         >
-          Qo'shish
+          tahrirlash
         </button>
       </form>
     </section>

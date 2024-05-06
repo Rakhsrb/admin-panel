@@ -1,8 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Services = () => {
+  let path = useNavigate();
+
+  function toEditPage(service) {
+    path(`/edit-service/${service.id}`);
+  }
   const { services } = useSelector((state) => state.mainSlice);
   const { data } = services;
   return (
@@ -43,7 +48,10 @@ export const Services = () => {
                   <Link className="bg-green-900 text-white rounded-md p-2">
                     View
                   </Link>
-                  <Link className="bg-cyan-900 text-white rounded-md p-2 mx-3">
+                  <Link
+                    onClick={() => toEditPage(elem)}
+                    className="bg-cyan-900 text-white rounded-md p-2 mx-3"
+                  >
                     Edit
                   </Link>
                   <button className="bg-red-800 text-white rounded-md p-2">

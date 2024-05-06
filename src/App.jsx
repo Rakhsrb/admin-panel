@@ -71,23 +71,23 @@ function App() {
         },
         //edit paths
         {
-          path: "/add-admin/:id",
+          path: "/edit-admin/:id",
           element: <EditAdmin />,
         },
         {
-          path: "/add-course/:id",
+          path: "/edit-course/:id",
           element: <EditCourse />,
         },
         {
-          path: "/add-portfolio/:id",
+          path: "/edit-portfolio/:id",
           element: <EditProject />,
         },
         {
-          path: "/add-service/:id",
+          path: "/edit-service/:id",
           element: <EditService />,
         },
         {
-          path: "/add-worker/:id",
+          path: "/edit-worker/:id",
           element: <EditWorker />,
         },
       ],

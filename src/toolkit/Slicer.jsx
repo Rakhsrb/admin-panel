@@ -10,11 +10,13 @@ const MainSlice = createSlice({
           id: 1,
           name: "Suhrob",
           email: "suhrobrahmatullayev973132@gmail.com",
+          password: "123123fefe",
         },
         {
           id: 2,
           name: "admin",
           email: "admin@gmail.com",
+          password: "fefe123123",
         },
       ],
       isError: false,
@@ -28,6 +30,7 @@ const MainSlice = createSlice({
           image:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkBw7UqNme-O1YloiLl6kDB3565u8pCSQ2L-38r9tnQQ&s",
           price: "5.600.000 so'm (700.000 so'm 8 oy)",
+          description: "Front-end Bootcamp",
         },
         {
           id: 2,
@@ -35,6 +38,7 @@ const MainSlice = createSlice({
           image:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkBw7UqNme-O1YloiLl6kDB3565u8pCSQ2L-38r9tnQQ&s",
           price: "3.600.000 so'm (600.000 so'm 6 oy)",
+          description: "Front-end",
         },
         {
           id: 3,
@@ -42,6 +46,7 @@ const MainSlice = createSlice({
           image:
             "https://logopond.com/logos/a2dc2d250540d76f8c8d8b2b213836ec.png",
           price: "3.600.000 so'm (600.000 so'm 6 oy)",
+          description: "Back-end Bootcamp",
         },
       ],
       isError: false,
@@ -55,6 +60,8 @@ const MainSlice = createSlice({
           image:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrLWZJ09YHkLszI7tQ0FKZyXxq5VsafSehBHwGv4B_Ag&s",
           category: "Web Site",
+          description: "Web",
+          url: "",
         },
         {
           id: 2,
@@ -62,6 +69,8 @@ const MainSlice = createSlice({
           image:
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUuEDOxSHxrGZP9bJAg7dYITro57iYslHyr6y_aEyuQ&s",
           category: "3D Design",
+          description: "3D Hero",
+          url: "",
         },
       ],
       isError: false,
@@ -146,8 +155,95 @@ const MainSlice = createSlice({
           ...state.admins,
           data: state.admins.data.map((admin) =>
             admin.id === +payload.id
-              ? { ...admin, name: payload.name, email: payload.email }
+              ? admin.password === payload.password
+                ? {
+                    ...admin,
+                    name: payload.name,
+                    email: payload.email,
+                  }
+                : admin
               : admin
+          ),
+        },
+      };
+      return state;
+    },
+    updateCourseInfo: (state, { payload }) => {
+      state = {
+        ...state,
+        courses: {
+          ...state.courses,
+          data: state.courses.data.map((course) =>
+            course.id === +payload.id
+              ? {
+                  ...course,
+                  title: payload.title,
+                  image: payload.image,
+                  description: payload.description,
+                  price: payload.price,
+                }
+              : course
+          ),
+        },
+      };
+      return state;
+    },
+    updatePortfolioInfo: (state, { payload }) => {
+      state = {
+        ...state,
+        portfolio: {
+          ...state.portfolio,
+          data: state.portfolio.data.map((port) =>
+            port.id === +payload.id
+              ? {
+                  ...port,
+                  title: payload.title,
+                  price: payload.price,
+                  description: payload.description,
+                  image: payload.image,
+                  category: payload.category,
+                  url: payload.url,
+                }
+              : port
+          ),
+        },
+      };
+      return state;
+    },
+    updateServiceInfo: (state, { payload }) => {
+      state = {
+        ...state,
+        services: {
+          ...state.services,
+          data: state.services.data.map((service) =>
+            service.id === +payload.id
+              ? {
+                  ...service,
+                  title: payload.title,
+                  description: payload.description,
+                  image: payload.image,
+                  category: payload.category,
+                }
+              : service
+          ),
+        },
+      };
+      return state;
+    },
+    updateWorkerInfo: (state, { payload }) => {
+      state = {
+        ...state,
+        team: {
+          ...state.team,
+          data: state.team.data.map((worker) =>
+            worker.id === +payload.id
+              ? {
+                  ...worker,
+                  name: payload.name,
+                  job: payload.job,
+                  image: payload.image,
+                }
+              : worker
           ),
         },
       };
@@ -163,5 +259,9 @@ export const {
   getServices,
   getTeam,
   updateAdminInfo,
+  updateCourseInfo,
+  updatePortfolioInfo,
+  updateServiceInfo,
+  updateWorkerInfo,
 } = MainSlice.actions;
 export default MainSlice.reducer;

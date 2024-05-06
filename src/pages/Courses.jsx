@@ -1,8 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Courses = () => {
+  let path = useNavigate();
+
+  function toEditPage(course) {
+    path(`/edit-course/${course.id}`);
+  }
+
   const { courses } = useSelector((state) => state.mainSlice);
   const { data } = courses;
   return (
@@ -41,7 +47,10 @@ export const Courses = () => {
                   <Link className="bg-green-900 text-white rounded-md p-2">
                     View
                   </Link>
-                  <Link className="bg-cyan-900 text-white rounded-md p-2 mx-3">
+                  <Link
+                    onClick={() => toEditPage(elem)}
+                    className="bg-cyan-900 text-white rounded-md p-2 mx-3"
+                  >
                     Edit
                   </Link>
                   <button className="bg-red-800 text-white rounded-md p-2">
