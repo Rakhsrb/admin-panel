@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./layout/RootLayout";
 import AddAdmin from "./pages/AddPages/AddAdmin";
@@ -20,7 +20,7 @@ import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
+  const isLogin = localStorage.getItem("token") || false;
   const router = createBrowserRouter([
     !isLogin
       ? {

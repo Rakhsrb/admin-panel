@@ -25,8 +25,9 @@ const Login = () => {
         "https://uitc-backend.onrender.com/api/admin/login",
         { ...userInfo }
       );
-      if (response.status === 200) {
+      if (response.data.token !== undefined) {
         localStorage.setItem("token", response.data.token);
+        window.location.href = "/";
       }
     } catch (error) {
       console.log(error);
