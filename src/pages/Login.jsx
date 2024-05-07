@@ -3,36 +3,38 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const Login = () => {
-  const [showPass, setShowPass] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
-  });
-  const [errorAdmin, setErrorAdmin] = useState(null);
-  const [errorPass, setErrorPass] = useState(null);
+  // const [showPass, setShowPass] = useState(false);
+  // const [userInfo, setUserInfo] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+  // const [errorAdmin, setErrorAdmin] = useState(null);
+  // const [errorPass, setErrorPass] = useState(null);
 
-  const handleGetValues = (e) => {
-    setUserInfo({
-      ...userInfo,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleGetValues = (e) => {
+  //   setUserInfo({
+  //     ...userInfo,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
-  const sendUserInfo = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "https://uitc-backend.onrender.com/api/admin/login",
-        { ...userInfo }
-      );
-      if (response.data.token !== undefined) {
-        localStorage.setItem("token", response.data.token);
-        window.location.href = "/";
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const sendUserInfo = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       "https://uitc-backend.onrender.com/api/admin/login",
+  //       { ...userInfo }
+  //     );
+  //     if (response.data.token !== undefined) {
+  //       localStorage.setItem("token", response.data.token);
+  //       nav("/");
+  //     } else {
+  //       nav("/login");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <section className="flex justify-center items-center z-10 bg-cyan-900 h-screen ">

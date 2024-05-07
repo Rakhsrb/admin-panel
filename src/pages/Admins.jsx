@@ -59,6 +59,6 @@ export const Admins = () => {
           )}
         </tbody>
       </table>
-    </section >
+    </section>
   );
 };
