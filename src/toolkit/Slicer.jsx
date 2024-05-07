@@ -142,11 +142,11 @@ const MainSlice = createSlice({
     },
   },
   reducers: {
-    getAdmins() {},
-    getCourses() {},
-    getProjects() {},
-    getServices() {},
-    getTeam() {},
+    getAdmins() { },
+    getCourses() { },
+    getProjects() { },
+    getServices() { },
+    getTeam() { },
 
     updateAdminInfo: (state, { payload }) => {
       state = {
@@ -157,10 +157,10 @@ const MainSlice = createSlice({
             admin.id === +payload.id
               ? admin.password === payload.password
                 ? {
-                    ...admin,
-                    name: payload.name,
-                    email: payload.email,
-                  }
+                  ...admin,
+                  name: payload.name,
+                  email: payload.email,
+                }
                 : admin
               : admin
           ),
@@ -176,12 +176,12 @@ const MainSlice = createSlice({
           data: state.courses.data.map((course) =>
             course.id === +payload.id
               ? {
-                  ...course,
-                  title: payload.title,
-                  image: payload.image,
-                  description: payload.description,
-                  price: payload.price,
-                }
+                ...course,
+                title: payload.title,
+                image: payload.image,
+                description: payload.description,
+                price: payload.price,
+              }
               : course
           ),
         },
@@ -196,14 +196,14 @@ const MainSlice = createSlice({
           data: state.portfolio.data.map((port) =>
             port.id === +payload.id
               ? {
-                  ...port,
-                  title: payload.title,
-                  price: payload.price,
-                  description: payload.description,
-                  image: payload.image,
-                  category: payload.category,
-                  url: payload.url,
-                }
+                ...port,
+                title: payload.title,
+                price: payload.price,
+                description: payload.description,
+                image: payload.image,
+                category: payload.category,
+                url: payload.url,
+              }
               : port
           ),
         },
@@ -218,12 +218,12 @@ const MainSlice = createSlice({
           data: state.services.data.map((service) =>
             service.id === +payload.id
               ? {
-                  ...service,
-                  title: payload.title,
-                  description: payload.description,
-                  image: payload.image,
-                  category: payload.category,
-                }
+                ...service,
+                title: payload.title,
+                description: payload.description,
+                image: payload.image,
+                category: payload.category,
+              }
               : service
           ),
         },
@@ -238,11 +238,11 @@ const MainSlice = createSlice({
           data: state.team.data.map((worker) =>
             worker.id === +payload.id
               ? {
-                  ...worker,
-                  name: payload.name,
-                  job: payload.job,
-                  image: payload.image,
-                }
+                ...worker,
+                name: payload.name,
+                job: payload.job,
+                image: payload.image,
+              }
               : worker
           ),
         },

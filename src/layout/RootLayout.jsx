@@ -7,7 +7,7 @@ export const RootLayout = () => {
   return (
     <>
       <Navbar />
-      <div className="root__grid min-h-screen">
+      <div className="root__grid h-screen">
         <Sidebar />
         <Outlet />
       </div>

@@ -95,7 +95,7 @@ const EditWorker = () => {
           type="submit"
           className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
         >
-          tahrirlash
+          taxrirlash
         </button>
       </form>
     </section>

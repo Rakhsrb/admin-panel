@@ -41,7 +41,7 @@ const EditCourse = () => {
         onSubmit={submitUpdatedInfo}
       >
         <h1 className="text-4xl font-semibold mb-7">
-          Kursning malumotlarini tahrirlash
+          Kursning malumotlarini taxrirlash
         </h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -105,7 +105,7 @@ const EditCourse = () => {
           type="submit"
           className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
         >
-          tahrirlash
+          taxrirlash
         </button>
       </form>
     </section>

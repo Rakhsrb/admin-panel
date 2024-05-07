@@ -27,6 +27,7 @@
 
 body {
   background: #ffffff;
+  overflow: hidden;
 }
 
 .container {

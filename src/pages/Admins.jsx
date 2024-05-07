@@ -11,8 +11,8 @@ export const Admins = () => {
     path(`/edit-admin/${admin.id}`);
   }
   return (
-    <section className="h-full p-5 bg-cyan-50">
-      <div className="h-[20vh] flex justify-between items-center">
+    <section className="h-screen p-5 bg-cyan-50 overflow-y-auto">
+      <div className="h-[20vh] flex justify-between items-center ">
         <h1 className="text-5xl">Adminlar</h1>
         <Link
           to={"/add-admin"}
@@ -21,7 +21,7 @@ export const Admins = () => {
           Yangi Admin Qo'shish
         </Link>
       </div>
-      <table className="w-full">
+      <table className="w-full ">
         <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Name</th>
@@ -59,6 +59,6 @@ export const Admins = () => {
           )}
         </tbody>
       </table>
-    </section>
+    </section >
   );
 };

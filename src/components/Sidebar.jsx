@@ -2,7 +2,7 @@ import {
   Books,
   Circuitry,
   Command,
-  House,
+  UserCircle,
   UserCircleGear,
   Users,
 } from "@phosphor-icons/react";
@@ -13,8 +13,8 @@ export const Sidebar = () => {
   const navLinks = [
     {
       to: "/",
-      title: "UITC",
-      icon: <House />,
+      title: "USER",
+      icon: <UserCircle />,
     },
     {
       to: "/admins",

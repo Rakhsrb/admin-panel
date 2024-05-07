@@ -40,6 +40,8 @@ const EditAdmin = () => {
       });
     }
   };
+
+
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form
@@ -47,7 +49,7 @@ const EditAdmin = () => {
         onSubmit={submitUpdatedInfo}
       >
         <h1 className="text-4xl font-semibold mb-7">
-          Admin malumotlarini tahrirlash
+          Admin malumotlarini taxrirlash
         </h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -108,7 +110,7 @@ const EditAdmin = () => {
           type="submit"
           className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
         >
-          tahrirlash
+          taxrirlash
         </button>
       </form>
     </section>
