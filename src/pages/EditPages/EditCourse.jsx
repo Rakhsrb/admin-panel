@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateCourseInfo } from "../toolkit/Slicer";
+import { updateCourseInfo } from "../../toolkit/Slicer";
 
 const EditCourse = () => {
   const dispatch = useDispatch();

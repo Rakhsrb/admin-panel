@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateServiceInfo } from "../toolkit/Slicer.jsx";
+import { updateServiceInfo } from "../../toolkit/Slicer.jsx";
 
 const EditService = () => {
   const dispatch = useDispatch();
