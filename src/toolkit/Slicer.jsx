@@ -3,6 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const MainSlice = createSlice({
   name: "mainSlice",
   initialState: {
+    user: {
+      token: localStorage.getItem("token") || "",
+      userInfo: JSON.parse(localStorage.getItem("userInfo")) || {},
+      // name: localStorage.getItem("name") || "",
+      // email: localStorage.getItem("email") || "",
+    },
     admins: {
       isPending: false,
       data: [
@@ -249,6 +255,26 @@ const MainSlice = createSlice({
       };
       return state;
     },
+    loginUser: (state, { payload }) => {
+      state = {
+        ...state,
+        user: {
+          ...state.user,
+          token: localStorage.setItem("token", payload.token),
+          userInfo: localStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              name: payload.data.name,
+              email: payload.data.email,
+            })
+          ),
+          // name: localStorage.setItem("name", payload.data.name),
+          // email: localStorage.setItem("email", payload.data.email),
+        },
+      };
+      window.location.href = "/";
+      return state;
+    },
   },
 });
 
@@ -263,5 +289,6 @@ export const {
   updatePortfolioInfo,
   updateServiceInfo,
   updateWorkerInfo,
+  loginUser,
 } = MainSlice.actions;
 export default MainSlice.reducer;

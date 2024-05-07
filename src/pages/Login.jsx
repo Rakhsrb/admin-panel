@@ -1,40 +1,42 @@
 import { Eye, EyeClosed } from "@phosphor-icons/react";
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../toolkit/Slicer";
 
 const Login = () => {
-  // const [showPass, setShowPass] = useState(false);
-  // const [userInfo, setUserInfo] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  // const [errorAdmin, setErrorAdmin] = useState(null);
-  // const [errorPass, setErrorPass] = useState(null);
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+  const [showPass, setShowPass] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorAdmin, setErrorAdmin] = useState(null);
+  const [errorPass, setErrorPass] = useState(null);
 
-  // const handleGetValues = (e) => {
-  //   setUserInfo({
-  //     ...userInfo,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+  const handleGetValues = (e) => {
+    setUserInfo({
+      ...userInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  // const sendUserInfo = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "https://uitc-backend.onrender.com/api/admin/login",
-  //       { ...userInfo }
-  //     );
-  //     if (response.data.token !== undefined) {
-  //       localStorage.setItem("token", response.data.token);
-  //       nav("/");
-  //     } else {
-  //       nav("/login");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const sendUserInfo = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://uitc-backend.onrender.com/api/admin/login",
+        { ...userInfo }
+      );
+      if (response.status === 200) {
+        dispatch(loginUser(response.data));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className="flex justify-center items-center z-10 bg-cyan-900 h-screen ">

@@ -1,8 +1,6 @@
 import React from "react";
-import {
-  RouterProvider,
-  createBrowserRouter
-} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./layout/RootLayout";
 import AddAdmin from "./pages/AddPages/AddAdmin";
 import AddCourses from "./pages/AddPages/AddCourses";
@@ -17,6 +15,7 @@ import EditCourse from "./pages/EditPages/EditCourse";
 import EditProject from "./pages/EditPages/EditProject";
 import EditService from "./pages/EditPages/EditServices";
 import EditWorker from "./pages/EditPages/EditWorker";
+import Login from "./pages/Login";
 import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
@@ -24,84 +23,85 @@ function App() {
   // const isLogin = localStorage.getItem("token") || false;
   // !isLogin && redirect("/login");
 
+  const { user } = useSelector((state) => state.mainSlice);
   const router = createBrowserRouter([
-    // !isLogin
-    //   ? {
-    //       path: "/login",
-    //       element: <Login />,
-    //     } :
-    {
-      path: "/",
-      element: <RootLayout />,
-      children: [
-        {
-          index: true,
-          element: <Dashboard />,
+    user.token?.length > 15
+      ? {
+          path: "/",
+          element: <RootLayout />,
+          children: [
+            {
+              index: true,
+              element: <Dashboard />,
+            },
+            {
+              path: "/courses",
+              element: <Courses />,
+            },
+            {
+              path: "/services",
+              element: <Services />,
+            },
+            {
+              path: "/projects",
+              element: <Projects />,
+            },
+            {
+              path: "/admins",
+              element: <Admins />,
+            },
+            {
+              path: "/team",
+              element: <Team />,
+            },
+            //add paths
+            {
+              path: "/add-admin",
+              element: <AddAdmin />,
+            },
+            {
+              path: "/add-course",
+              element: <AddCourses />,
+            },
+            {
+              path: "/add-portfolio",
+              element: <AddProjects />,
+            },
+            {
+              path: "/add-service",
+              element: <AddServices />,
+            },
+            {
+              path: "/add-worker",
+              element: <AddWorker />,
+            },
+            //edit paths
+            {
+              path: "/edit-admin/:id",
+              element: <EditAdmin />,
+            },
+            {
+              path: "/edit-course/:id",
+              element: <EditCourse />,
+            },
+            {
+              path: "/edit-portfolio/:id",
+              element: <EditProject />,
+            },
+            {
+              path: "/edit-service/:id",
+              element: <EditService />,
+            },
+            {
+              path: "/edit-worker/:id",
+              element: <EditWorker />,
+            },
+          ],
+        }
+      : {
+          path: "/",
+          element: <Login />,
         },
-        {
-          path: "/courses",
-          element: <Courses />,
-        },
-        {
-          path: "/services",
-          element: <Services />,
-        },
-        {
-          path: "/projects",
-          element: <Projects />,
-        },
-        {
-          path: "/admins",
-          element: <Admins />,
-        },
-        {
-          path: "/team",
-          element: <Team />,
-        },
-        //add paths
-        {
-          path: "/add-admin",
-          element: <AddAdmin />,
-        },
-        {
-          path: "/add-course",
-          element: <AddCourses />,
-        },
-        {
-          path: "/add-portfolio",
-          element: <AddProjects />,
-        },
-        {
-          path: "/add-service",
-          element: <AddServices />,
-        },
-        {
-          path: "/add-worker",
-          element: <AddWorker />,
-        },
-        //edit paths
-        {
-          path: "/edit-admin/:id",
-          element: <EditAdmin />,
-        },
-        {
-          path: "/edit-course/:id",
-          element: <EditCourse />,
-        },
-        {
-          path: "/edit-portfolio/:id",
-          element: <EditProject />,
-        },
-        {
-          path: "/edit-service/:id",
-          element: <EditService />,
-        },
-        {
-          path: "/edit-worker/:id",
-          element: <EditWorker />,
-        },
-      ],
-    },
   ]);
   return <RouterProvider router={router} />;
 }
