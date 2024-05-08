@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -50,7 +50,7 @@ export const Admins = () => {
               </tr>
             ))
           ) : (
-            <tr>
+            <tr className="text-center border-2 border-cyan-800">
               <td>No Data...</td>
             </tr>
           )}

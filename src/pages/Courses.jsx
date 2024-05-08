@@ -1,16 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Courses = () => {
-  let path = useNavigate();
-
-  function toEditPage(course) {
-    path(`/edit-course/${course.id}`);
-  }
-
   const { courses } = useSelector((state) => state.mainSlice);
-  const { data } = courses;
+  const { data, isError, isPending } = courses;
+
   return (
     <section className="h-full p-5 bg-cyan-50">
       <div className="h-[20vh] flex justify-between items-center">
@@ -48,7 +43,7 @@ export const Courses = () => {
                     View
                   </Link>
                   <Link
-                    onClick={() => toEditPage(elem)}
+                    to={`/edit-course/${elem.id}`}
                     className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                   >
                     Edit
@@ -60,7 +55,9 @@ export const Courses = () => {
               </tr>
             ))
           ) : (
-            <h1>No Data...</h1>
+            <tr className="text-center border-2 border-cyan-800">
+              <td>No Data...</td>
+            </tr>
           )}
         </tbody>
       </table>

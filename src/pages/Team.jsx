@@ -1,15 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Team = () => {
-  let path = useNavigate();
-
-  function toEditPage(worker) {
-    path(`/edit-worker/${worker.id}`);
-  }
   const { team } = useSelector((state) => state.mainSlice);
-  const { data } = team;
+  const { data, isError, isPending } = team;
   return (
     <section className="h-full p-5 bg-cyan-50">
       <div className="h-[20vh] flex justify-between items-center">
@@ -47,7 +42,7 @@ export const Team = () => {
                     View
                   </Link>
                   <Link
-                    onClick={() => toEditPage(elem)}
+                    to={`/edit-worker/${elem.id}`}
                     className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                   >
                     Edit
@@ -59,7 +54,9 @@ export const Team = () => {
               </tr>
             ))
           ) : (
-            <h1>No Data...</h1>
+            <tr className="text-center border-2 border-cyan-800">
+              <td>No Data...</td>
+            </tr>
           )}
         </tbody>
       </table>
