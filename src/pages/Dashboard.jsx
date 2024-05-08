@@ -8,8 +8,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export const Dashboard = () => {
-  const { userData } = useSelector(state => state.mainSlice)
-  const { admin } = userData
+  const { userData } = useSelector((state) => state.mainSlice);
+  const { admin } = userData;
 
   const LogOut = () => {
     localStorage.clear();

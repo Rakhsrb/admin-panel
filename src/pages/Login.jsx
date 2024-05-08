@@ -40,8 +40,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/login",
-        userInfo
+        "https://uitc-backend.onrender.com/api/admin/login",
+        { ...userInfo }
       );
       if (response.data.AdminNotFound) {
         setErrorAdmin({

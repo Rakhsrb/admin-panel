@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -21,7 +22,6 @@ import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
 import { checkLogin } from "./toolkit/Slicer";
-import axios from "axios";
 function App() {
   const { isLogin } = useSelector((state) => state.mainSlice);
 
@@ -31,11 +31,9 @@ function App() {
     async function getUser(id) {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/admin/" + id
+          "https://uitc-backend.onrender.com/api/admin/" + id
         );
-        if (response) {
-          dispatch(checkLogin(true));
-        }
+        dispatch(checkLogin(true));
       } catch (err) {
         dispatch(checkLogin(false));
         console.log(err);
