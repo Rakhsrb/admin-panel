@@ -7,6 +7,7 @@ import { checkLogin } from "../toolkit/Slicer";
 
 const Login = () => {
   const { isLogin } = useSelector((state) => state.mainSlice);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
@@ -39,6 +40,7 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await axios.post(
         "https://uitc-backend.onrender.com/api/admin/login",
         { ...userInfo }
@@ -75,6 +77,8 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -142,7 +146,7 @@ const Login = () => {
           type="submit"
           className="bg-white px-10 py-2 rounded-md mt-7 text-black"
         >
-          Log In
+          {isLoading ? "Loading..." : "Log In"}
         </button>
       </form>
     </section>
