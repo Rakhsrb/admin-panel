@@ -33,6 +33,7 @@ const MainSlice = createSlice({
       isPending: false,
       isError: false,
     },
+    baseUrlApi: "https://uitc-backend.onrender.com/",
   },
   reducers: {
     getAdminsPending(state) {

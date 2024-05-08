@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const Projects = () => {
   const { portfolio } = useSelector((state) => state.mainSlice);
   const { data, isError, isPending } = portfolio;
+
+  useEffect(()=>{
+    async 
+  },[])
 
   return (
     <section className="h-full p-5 bg-cyan-50">
