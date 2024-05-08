@@ -1,18 +1,11 @@
-import {
-  PencilSimple,
-  SignOut,
-  TrashSimple,
-  UserCircle,
-} from "@phosphor-icons/react";
+import { PencilSimple, SignOut, TrashSimple } from "@phosphor-icons/react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
   const admin = JSON.parse(localStorage.getItem("adminInfo"));
-  const navigate = useNavigate();
   const LogOut = () => {
     localStorage.clear();
-    navigate("/");
+    window.location.href = "/";
   };
 
   return (
