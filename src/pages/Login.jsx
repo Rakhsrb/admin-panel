@@ -83,68 +83,44 @@ const Login = () => {
   };
 
   return (
-    <section className="flex justify-center items-center z-10 bg-cyan-900 h-screen ">
-      <form
-        className="p-6 rounded-md w-1/3 flex flex-col items-center"
-        onSubmit={loginUser}
-      >
-        <h1 className="text-center text-3xl font-medium mb-12 text-white">
-          Log In
-        </h1>
-        <div className="flex flex-col gap-5 w-full">
-          <div className="flex flex-col gap-2 text-xl">
-            {errorAdmin.error ? (
-              <h1 className="text-xl text-red-400">{errorAdmin.message}</h1>
-            ) : (
-              ""
-            )}
-            <label htmlFor="adminEmail" className="text-white">
-              Email:
-            </label>
-            <input
-              required
-              type="email"
-              placeholder="Enter email"
-              name="email"
-              id="adminEmail"
-              className="outline-none p-2 rounded-md"
-              onChange={handleGetValues}
-            />
-          </div>
-          <div className="flex flex-col gap-2 text-xl">
-            {errorPass.error ? (
-              <h1 className="text-xl text-red-400">{errorPass.message}</h1>
-            ) : (
-              ""
-            )}
-            <label htmlFor="adminPass" className="text-white">
-              Password:
-            </label>
-            <div className="border  text-lg flex items-center gap-3 bg-white p-2 rounded-md">
-              <input
-                required
-                type={showPass ? "text" : "password"}
-                placeholder="Parol kiriting"
-                className="outline-none w-full"
-                name="password"
-                id="adminPassword"
-                onChange={handleGetValues}
-              />
-              <span
-                onClick={() =>
-                  showPass ? setShowPass(false) : setShowPass(true)
-                }
-              >
-                {showPass ? <Eye /> : <EyeClosed />}
-              </span>
-            </div>
-          </div>
+    <section className="flex flex-col justify-center bg-slate-800 items-center h-screen ">
+      <img src="./icon.png" className="w-[250px]" alt="" />
+      <form className="flex flex-col w-1/3 p-10 gap-4" onSubmit={loginUser}>
+        {errorAdmin.error ? (
+          <h1 className="text-xl text-red-600">{errorAdmin.message}</h1>
+        ) : null}
+        <input
+          type="email"
+          placeholder="Enter email"
+          name="email"
+          className="outline-none p-2 rounded-md text-lg"
+          value={userInfo.email}
+          onChange={handleGetValues}
+        />
+        {errorPass.error ? (
+          <h1 className="text-xl text-red-600">{errorPass.message}</h1>
+        ) : null}
+        <div className="bg-white text-lg flex items-center gap-3 p-2 rounded-md">
+          <input
+            required
+            type={showPass ? "text" : "password"}
+            placeholder="Parol kiriting"
+            className="outline-none w-full"
+            name="password"
+            value={userInfo.password}
+            onChange={handleGetValues}
+          />
+          <span
+            onClick={() => (showPass ? setShowPass(false) : setShowPass(true))}
+          >
+            {showPass ? <Eye /> : <EyeClosed />}
+          </span>
         </div>
         <button
           type="submit"
-          className="bg-white px-10 py-2 rounded-md mt-7 text-black"
+          className="text-2xl p-2 bg-cyan-700 text-white rounded-md"
         >
-          {isLoading ? "Loading..." : "Log In"}
+          {isLoading ? "Loading..." : "Login"}
         </button>
       </form>
     </section>
