@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-import { updateAdminInfo } from "../../toolkit/Slicer";
 
 const EditAdmin = () => {
   const [showPass, setShowPass] = useState(false);

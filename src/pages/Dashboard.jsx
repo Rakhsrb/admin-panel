@@ -2,30 +2,24 @@ import {
   PencilSimple,
   SignOut,
   TrashSimple,
-  User,
+  UserCircle,
 } from "@phosphor-icons/react";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
-  const { userData } = useSelector((state) => state.mainSlice);
-  const { admin } = userData;
-
+  const admin = JSON.parse(localStorage.getItem("adminInfo"));
+  const navigate = useNavigate();
   const LogOut = () => {
     localStorage.clear();
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
-    <section className="h-full bg-cyan-900">
-      <div className="flex items-center justify-center h-full flex-col gap-5">
-        <User
-          size={100}
-          color="white"
-          className="bg-cyan-700 rounded-full border-4 "
-        />
-        {/* <h1 className="text-2xl text-white">User Name: {admin.name}</h1>
-        <h1 className="text-xl text-white">User Email: {admin.email}</h1> */}
+    <section className="h-full flex items-center justify-center bg-cyan-900">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-2xl text-white">UserName: {admin.name}</h1>
+        <h1 className="text-xl text-white">User Email: {admin.email}</h1>
         <div className="flex gap-4 items-center">
           <button className="bg-[#16a34a] py-3 px-5 rounded-md text-white flex items-center gap-2 select-none">
             Edit profile
@@ -36,7 +30,7 @@ export const Dashboard = () => {
             <TrashSimple />
           </button>
           <button
-            className="bg-[#212121] py-3 px-5 rounded-md text-white flex items-center gap-2 select-none"
+            className="bg-[#212121] py-3 px-5 text-white rounded-md flex items-center gap-2 select-none"
             onClick={LogOut}
           >
             Log out <SignOut />
