@@ -33,7 +33,9 @@ function App() {
         const response = await axios.get(
           "http://localhost:5000/api/admin/" + id
         );
-        dispatch(checkLogin(true));
+        if (response) {
+          dispatch(checkLogin(true));
+        }
       } catch (err) {
         dispatch(checkLogin(false));
         console.log(err);
