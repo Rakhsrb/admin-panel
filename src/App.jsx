@@ -16,6 +16,7 @@ import EditProject from "./pages/EditPages/EditProject";
 import EditService from "./pages/EditPages/EditServices";
 import EditWorker from "./pages/EditPages/EditWorker";
 import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
 import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
@@ -96,12 +97,20 @@ function App() {
               path: "/edit-worker/:id",
               element: <EditWorker />,
             },
+            {
+              path: "*",
+              element: <NotFound />,
+            },
           ],
         }
       : {
           path: "/",
           element: <Login />,
         },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
   ]);
   return <RouterProvider router={router} />;
 }

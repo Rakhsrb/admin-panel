@@ -2,11 +2,9 @@ import { Eye, EyeClosed } from "@phosphor-icons/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { loginUser } from "../toolkit/Slicer";
 
 const Login = () => {
-  const nav = useNavigate();
   const dispatch = useDispatch();
   const [showPass, setShowPass] = useState(false);
   const [userInfo, setUserInfo] = useState({
