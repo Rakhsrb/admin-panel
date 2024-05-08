@@ -1,10 +1,35 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  getAdminsError,
+  getAdminsPending,
+  getAdminsSuccess,
+} from "../toolkit/Slicer";
+import axios from "axios";
 
 export const Admins = () => {
-  const { admins } = useSelector((state) => state.mainSlice);
+  const { admins, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
+  const dispatch = useDispatch();
   const { data, isError, isPending } = admins;
+
+  useEffect(() => {
+    async function getData(url) {
+      try {
+        dispatch(getAdminsPending());
+        const response = (await axios.get(url + "api/admin/", config)).data
+          .data;
+        dispatch(getAdminsSuccess(response));
+      } catch (err) {
+        dispatch(getAdminsError());
+        console.log(err);
+      }
+    }
+    getData(baseUrlApi);
+  }, []);
+
   return (
     <section className="h-screen p-5 bg-cyan-50 overflow-y-auto">
       <div className="h-[20vh] flex justify-between items-center ">
@@ -28,7 +53,7 @@ export const Admins = () => {
           {data.length > 0 ? (
             data.map((elem) => (
               <tr
-                key={elem.id}
+                key={elem._id}
                 className="text-center border-2 border-cyan-800"
               >
                 <td>{elem.name}</td>

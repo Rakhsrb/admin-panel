@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -6,7 +7,6 @@ import {
   getProjectsPending,
   getProjectsSuccess,
 } from "../toolkit/Slicer";
-import axios from "axios";
 
 export const Projects = () => {
   const dispatch = useDispatch();
