@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./layout/RootLayout";
@@ -20,6 +20,8 @@ import NotFound from "./pages/NotFound";
 import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
+import { checkLogin } from "./toolkit/Slicer";
+import axios from "axios";
 function App() {
   const { userData } = useSelector((state) => state.mainSlice);
   const dispatch = useDispatch();
