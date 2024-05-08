@@ -21,92 +21,91 @@ import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
 function App() {
-  // const isLogin = localStorage.getItem("token") || false;
-  // !isLogin && redirect("/login");
 
-  const { user } = useSelector((state) => state.mainSlice);
+
+  const { isLogin } = useSelector((state) => state.mainSlice);
   const router = createBrowserRouter([
-    user.token?.length > 15
+    isLogin
       ? {
-          path: "/",
-          element: <RootLayout />,
-          children: [
-            {
-              index: true,
-              element: <Dashboard />,
-            },
-            {
-              path: "/courses",
-              element: <Courses />,
-            },
-            {
-              path: "/services",
-              element: <Services />,
-            },
-            {
-              path: "/projects",
-              element: <Projects />,
-            },
-            {
-              path: "/admins",
-              element: <Admins />,
-            },
-            {
-              path: "/team",
-              element: <Team />,
-            },
-            //add paths
-            {
-              path: "/add-admin",
-              element: <AddAdmin />,
-            },
-            {
-              path: "/add-course",
-              element: <AddCourses />,
-            },
-            {
-              path: "/add-portfolio",
-              element: <AddProjects />,
-            },
-            {
-              path: "/add-service",
-              element: <AddServices />,
-            },
-            {
-              path: "/add-worker",
-              element: <AddWorker />,
-            },
-            //edit paths
-            {
-              path: "/edit-admin/:id",
-              element: <EditAdmin />,
-            },
-            {
-              path: "/edit-course/:id",
-              element: <EditCourse />,
-            },
-            {
-              path: "/edit-portfolio/:id",
-              element: <EditProject />,
-            },
-            {
-              path: "/edit-service/:id",
-              element: <EditService />,
-            },
-            {
-              path: "/edit-worker/:id",
-              element: <EditWorker />,
-            },
-            {
-              path: "*",
-              element: <NotFound />,
-            },
-          ],
-        }
+        path: "/",
+        element: <RootLayout />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: "/courses",
+            element: <Courses />,
+          },
+          {
+            path: "/services",
+            element: <Services />,
+          },
+          {
+            path: "/projects",
+            element: <Projects />,
+          },
+          {
+            path: "/admins",
+            element: <Admins />,
+          },
+          {
+            path: "/team",
+            element: <Team />,
+          },
+          //add paths
+          {
+            path: "/add-admin",
+            element: <AddAdmin />,
+          },
+          {
+            path: "/add-course",
+            element: <AddCourses />,
+          },
+          {
+            path: "/add-portfolio",
+            element: <AddProjects />,
+          },
+          {
+            path: "/add-service",
+            element: <AddServices />,
+          },
+          {
+            path: "/add-worker",
+            element: <AddWorker />,
+          },
+          //edit paths
+          {
+            path: "/edit-admin/:id",
+            element: <EditAdmin />,
+          },
+          {
+            path: "/edit-course/:id",
+            element: <EditCourse />,
+          },
+          {
+            path: "/edit-portfolio/:id",
+            element: <EditProject />,
+          },
+          {
+            path: "/edit-service/:id",
+            element: <EditService />,
+          },
+          {
+            path: "/edit-worker/:id",
+            element: <EditWorker />,
+          },
+          {
+            path: "*",
+            element: <NotFound />,
+          },
+        ],
+      }
       : {
-          path: "/",
-          element: <Login />,
-        },
+        path: "/",
+        element: <Login />,
+      },
     {
       path: "*",
       element: <NotFound />,

@@ -3,12 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const MainSlice = createSlice({
   name: "mainSlice",
   initialState: {
-    user: {
-      token: localStorage.getItem("token") || "",
-      userInfo: JSON.parse(localStorage.getItem("userInfo")) || {},
-      // name: localStorage.getItem("name") || "",
-      // email: localStorage.getItem("email") || "",
-    },
     admins: {
       isPending: false,
       data: [
@@ -146,13 +140,17 @@ const MainSlice = createSlice({
       ],
       isError: false,
     },
+    userData: {
+      isLogin: false,
+      admin: JSON.parse(localStorage.getItem('adminInfo'))
+    }
   },
   reducers: {
-    getAdmins() {},
-    getCourses() {},
-    getProjects() {},
-    getServices() {},
-    getTeam() {},
+    getAdmins() { },
+    getCourses() { },
+    getProjects() { },
+    getServices() { },
+    getTeam() { },
 
     updateAdminInfo: (state, { payload }) => {
       state = {
@@ -163,10 +161,10 @@ const MainSlice = createSlice({
             admin.id === +payload.id
               ? admin.password === payload.password
                 ? {
-                    ...admin,
-                    name: payload.name,
-                    email: payload.email,
-                  }
+                  ...admin,
+                  name: payload.name,
+                  email: payload.email,
+                }
                 : admin
               : admin
           ),
@@ -182,12 +180,12 @@ const MainSlice = createSlice({
           data: state.courses.data.map((course) =>
             course.id === +payload.id
               ? {
-                  ...course,
-                  title: payload.title,
-                  image: payload.image,
-                  description: payload.description,
-                  price: payload.price,
-                }
+                ...course,
+                title: payload.title,
+                image: payload.image,
+                description: payload.description,
+                price: payload.price,
+              }
               : course
           ),
         },
@@ -202,14 +200,14 @@ const MainSlice = createSlice({
           data: state.portfolio.data.map((port) =>
             port.id === +payload.id
               ? {
-                  ...port,
-                  title: payload.title,
-                  price: payload.price,
-                  description: payload.description,
-                  image: payload.image,
-                  category: payload.category,
-                  url: payload.url,
-                }
+                ...port,
+                title: payload.title,
+                price: payload.price,
+                description: payload.description,
+                image: payload.image,
+                category: payload.category,
+                url: payload.url,
+              }
               : port
           ),
         },
@@ -224,12 +222,12 @@ const MainSlice = createSlice({
           data: state.services.data.map((service) =>
             service.id === +payload.id
               ? {
-                  ...service,
-                  title: payload.title,
-                  description: payload.description,
-                  image: payload.image,
-                  category: payload.category,
-                }
+                ...service,
+                title: payload.title,
+                description: payload.description,
+                image: payload.image,
+                category: payload.category,
+              }
               : service
           ),
         },
@@ -244,37 +242,21 @@ const MainSlice = createSlice({
           data: state.team.data.map((worker) =>
             worker.id === +payload.id
               ? {
-                  ...worker,
-                  name: payload.name,
-                  job: payload.job,
-                  image: payload.image,
-                }
+                ...worker,
+                name: payload.name,
+                job: payload.job,
+                image: payload.image,
+              }
               : worker
           ),
         },
       };
       return state;
     },
-    loginUser: (state, { payload }) => {
-      state = {
-        ...state,
-        user: {
-          ...state.user,
-          token: localStorage.setItem("token", payload.token),
-          userInfo: localStorage.setItem(
-            "userInfo",
-            JSON.stringify({
-              name: payload.data.name,
-              email: payload.data.email,
-            })
-          ),
-          // name: localStorage.setItem("name", payload.data.name),
-          // email: localStorage.setItem("email", payload.data.email),
-        },
-      };
-      window.location.href = "/";
-      return state;
-    },
+    checkLogin: (state, { payload }) => {
+      state = { ...state, isLogin: JSON.parse(localStorage.getItem('token')) ? true : false }
+      return state
+    }
   },
 });
 
@@ -289,6 +271,6 @@ export const {
   updatePortfolioInfo,
   updateServiceInfo,
   updateWorkerInfo,
-  loginUser,
+  checkLogin
 } = MainSlice.actions;
 export default MainSlice.reducer;
