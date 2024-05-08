@@ -1,14 +1,31 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  getProjectsError,
+  getProjectsPending,
+  getProjectsSuccess,
+} from "../toolkit/Slicer";
+import axios from "axios";
 
 export const Projects = () => {
-  const { portfolio } = useSelector((state) => state.mainSlice);
+  const dispatch = useDispatch();
+  const { portfolio, baseUrlApi } = useSelector((state) => state.mainSlice);
   const { data, isError, isPending } = portfolio;
 
-  useEffect(()=>{
-    async 
-  },[])
+  useEffect(() => {
+    async function getData(url) {
+      try {
+        dispatch(getProjectsPending());
+        const response = await axios.get(url + "api/projects/");
+        dispatch(getProjectsSuccess(response.data));
+      } catch (error) {
+        dispatch(getProjectsError());
+        console.log(error);
+      }
+    }
+    getData(baseUrlApi);
+  }, []);
 
   return (
     <section className="h-full p-5 bg-cyan-50">
