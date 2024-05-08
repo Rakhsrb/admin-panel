@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./layout/RootLayout";
 import AddAdmin from "./pages/AddPages/AddAdmin";
@@ -20,13 +20,35 @@ import NotFound from "./pages/NotFound";
 import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
+import { checkLogin } from "./toolkit/Slicer";
+import axios from "axios";
 function App() {
-  // const isLogin = localStorage.getItem("token") || false;
-  // !isLogin && redirect("/login");
+  const { isLogin } = useSelector((state) => state.mainSlice);
 
-  const { user } = useSelector((state) => state.mainSlice);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function getUser(id) {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/admin/" + id
+        );
+        dispatch(checkLogin(true));
+      } catch (err) {
+        dispatch(checkLogin(false));
+        console.log(err);
+      }
+    }
+    if (JSON.parse(localStorage.getItem("adminInfo"))) {
+      const userId = JSON.parse(localStorage.getItem("adminInfo"));
+      getUser(userId._id);
+    } else {
+      dispatch(checkLogin(false));
+    }
+  }, []);
+
   const router = createBrowserRouter([
-    user.token?.length > 15
+    isLogin
       ? {
           path: "/",
           element: <RootLayout />,
