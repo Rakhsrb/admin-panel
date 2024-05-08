@@ -5,271 +5,128 @@ const MainSlice = createSlice({
   initialState: {
     admins: {
       isPending: false,
-      data: [
-        {
-          id: 1,
-          name: "Suhrob",
-          email: "suhrobrahmatullayev973132@gmail.com",
-          password: "123123fefe",
-        },
-        {
-          id: 2,
-          name: "admin",
-          email: "admin@gmail.com",
-          password: "fefe123123",
-        },
-      ],
+      data: [],
       isError: false,
     },
     courses: {
       isPending: false,
-      data: [
-        {
-          id: 1,
-          title: "Front-end Bootcamp",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkBw7UqNme-O1YloiLl6kDB3565u8pCSQ2L-38r9tnQQ&s",
-          price: "5.600.000 so'm (700.000 so'm 8 oy)",
-          description: "Front-end Bootcamp",
-        },
-        {
-          id: 2,
-          title: "Front-end",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkBw7UqNme-O1YloiLl6kDB3565u8pCSQ2L-38r9tnQQ&s",
-          price: "3.600.000 so'm (600.000 so'm 6 oy)",
-          description: "Front-end",
-        },
-        {
-          id: 3,
-          title: "Back-end",
-          image:
-            "https://logopond.com/logos/a2dc2d250540d76f8c8d8b2b213836ec.png",
-          price: "3.600.000 so'm (600.000 so'm 6 oy)",
-          description: "Back-end Bootcamp",
-        },
-      ],
+      data: [],
       isError: false,
     },
     portfolio: {
       isPending: false,
-      data: [
-        {
-          id: 1,
-          title: "Samo",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrLWZJ09YHkLszI7tQ0FKZyXxq5VsafSehBHwGv4B_Ag&s",
-          category: "Web Site",
-          description: "Web",
-          url: "",
-        },
-        {
-          id: 2,
-          title: "3D Hero model",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUuEDOxSHxrGZP9bJAg7dYITro57iYslHyr6y_aEyuQ&s",
-          category: "3D Design",
-          description: "3D Hero",
-          url: "",
-        },
-      ],
+      data: [],
       isError: false,
     },
     services: {
       isPending: false,
-      data: [
-        {
-          id: 1,
-          title: "Web Site",
-          description: "Web Site reactJs",
-          category: "Web",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1lIW8AHUPFm0qvY_0-nL7KNRtOChCUbAW2org57Kl-g&s",
-        },
-        {
-          id: 2,
-          title: "3D Design",
-          description: "3D Design",
-          category: "3D",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1lIW8AHUPFm0qvY_0-nL7KNRtOChCUbAW2org57Kl-g&s",
-        },
-        {
-          id: 3,
-          title: "3D Design",
-          description: "3D Design",
-          category: "3D",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1lIW8AHUPFm0qvY_0-nL7KNRtOChCUbAW2org57Kl-g&s",
-        },
-        {
-          id: 4,
-          title: "3D Design",
-          description: "3D Design",
-          category: "3D",
-          image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1lIW8AHUPFm0qvY_0-nL7KNRtOChCUbAW2org57Kl-g&s",
-        },
-      ],
+      data: [],
       isError: false,
     },
     team: {
       isPending: false,
-      data: [
-        {
-          id: 1,
-          name: "Suhrob",
-          image:
-            "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg",
-          job: "Back-end developer",
-        },
-        {
-          id: 2,
-          name: "Otabek",
-          image:
-            "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg",
-          job: "Front-end/Fullstack developer",
-        },
-        {
-          id: 3,
-          name: "Javohir",
-          image:
-            "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg",
-          job: "Designer",
-        },
-      ],
+      data: [],
       isError: false,
     },
     userData: {
-      isLogin: false,
+      isLogin: JSON.parse(localStorage.getItem("token")) || false,
+      isPending: false,
+      isError: false,
     },
   },
   reducers: {
-    getAdmins() {},
-    getCourses() {},
-    getProjects() {},
-    getServices() {},
-    getTeam() {},
-
-    updateAdminInfo: (state, { payload }) => {
-      state = {
-        ...state,
-        admins: {
-          ...state.admins,
-          data: state.admins.data.map((admin) =>
-            admin.id === +payload.id
-              ? admin.password === payload.password
-                ? {
-                    ...admin,
-                    name: payload.name,
-                    email: payload.email,
-                  }
-                : admin
-              : admin
-          ),
-        },
-      };
-      return state;
+    getAdminsPending(state) {
+      state.admins.isPending = true;
+      state.admins.isError = false;
     },
-    updateCourseInfo: (state, { payload }) => {
-      state = {
-        ...state,
-        courses: {
-          ...state.courses,
-          data: state.courses.data.map((course) =>
-            course.id === +payload.id
-              ? {
-                  ...course,
-                  title: payload.title,
-                  image: payload.image,
-                  description: payload.description,
-                  price: payload.price,
-                }
-              : course
-          ),
-        },
-      };
-      return state;
+    getAdminsSuccess(state, { payload }) {
+      state.admins.isPending = false;
+      state.admins.data = payload;
     },
-    updatePortfolioInfo: (state, { payload }) => {
-      state = {
-        ...state,
-        portfolio: {
-          ...state.portfolio,
-          data: state.portfolio.data.map((port) =>
-            port.id === +payload.id
-              ? {
-                  ...port,
-                  title: payload.title,
-                  price: payload.price,
-                  description: payload.description,
-                  image: payload.image,
-                  category: payload.category,
-                  url: payload.url,
-                }
-              : port
-          ),
-        },
-      };
-      return state;
+    getAdminsError(state) {
+      state.admins.isPending = false;
+      state.admins.isError = true;
     },
-    updateServiceInfo: (state, { payload }) => {
-      state = {
-        ...state,
-        services: {
-          ...state.services,
-          data: state.services.data.map((service) =>
-            service.id === +payload.id
-              ? {
-                  ...service,
-                  title: payload.title,
-                  description: payload.description,
-                  image: payload.image,
-                  category: payload.category,
-                }
-              : service
-          ),
-        },
-      };
-      return state;
+    getCoursesPending(state) {
+      state.courses.isPending = true;
+      state.courses.isError = false;
     },
-    updateWorkerInfo: (state, { payload }) => {
-      state = {
-        ...state,
-        team: {
-          ...state.team,
-          data: state.team.data.map((worker) =>
-            worker.id === +payload.id
-              ? {
-                  ...worker,
-                  name: payload.name,
-                  job: payload.job,
-                  image: payload.image,
-                }
-              : worker
-          ),
-        },
-      };
-      return state;
+    getCoursesSuccess(state, { payload }) {
+      state.courses.isPending = false;
+      state.courses.data = payload;
     },
-    checkLogin: (state, { payload }) => {
-      state = { ...state, userData: { ...state.userData, isLogin: payload } };
-      return state;
+    getCoursesError(state) {
+      state.courses.isPending = false;
+      state.courses.isError = true;
+    },
+    getProjectsPending(state) {
+      state.portfolio.isPending = true;
+      state.portfolio.isError = false;
+    },
+    getProjectsSuccess(state, { payload }) {
+      state.portfolio.isPending = false;
+      state.portfolio.data = payload;
+    },
+    getProjectsError(state) {
+      state.portfolio.isPending = false;
+      state.portfolio.isError = true;
+    },
+    getServicesPending(state) {
+      state.services.isPending = true;
+      state.services.isError = false;
+    },
+    getServicesSuccess(state, { payload }) {
+      state.services.isPending = false;
+      state.services.data = payload;
+    },
+    getServicesError(state) {
+      state.services.isPending = false;
+      state.services.isError = true;
+    },
+    getTeamPending(state) {
+      state.team.isPending = true;
+      state.team.isError = false;
+    },
+    getTeamSuccess(state, { payload }) {
+      state.team.isPending = false;
+      state.team.data = payload;
+    },
+    getTeamError(state) {
+      state.team.isPending = false;
+      state.team.isError = true;
+    },
+    checkLogin(state, { payload }) {
+      state.userData.isLogin = payload;
+    },
+    checkLoginPending(state) {
+      state.userData.isPending = true;
+      state.userData.isError = false;
+    },
+    checkLoginError(state) {
+      state.userData.isPending = false;
+      state.userData.isError = true;
     },
   },
 });
 
 export const {
-  getAdmins,
-  getCourses,
-  getProjects,
-  getServices,
-  getTeam,
-  updateAdminInfo,
-  updateCourseInfo,
-  updatePortfolioInfo,
-  updateServiceInfo,
-  updateWorkerInfo,
+  getAdminsPending,
+  getAdminsSuccess,
+  getAdminsError,
+  getCoursesPending,
+  getCoursesSuccess,
+  getCoursesError,
+  getProjectsPending,
+  getProjectsSuccess,
+  getProjectsError,
+  getServicesPending,
+  getServicesSuccess,
+  getServicesError,
+  getTeamPending,
+  getTeamSuccess,
+  getTeamError,
   checkLogin,
+  checkLoginPending,
+  checkLoginError,
 } = MainSlice.actions;
 export default MainSlice.reducer;

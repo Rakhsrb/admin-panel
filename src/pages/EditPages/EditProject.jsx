@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { updatePortfolioInfo } from "../../toolkit/Slicer";
 
 const EditProject = () => {
   const dispatch = useDispatch();

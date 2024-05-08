@@ -32,9 +32,7 @@ function App() {
         const response = await axios.get(
           "https://uitc-backend.onrender.com/api/admin/" + id
         );
-        if (response.status === 200) {
-          dispatch(checkLogin(true));
-        }
+        dispatch(checkLogin(true));
       } catch (err) {
         dispatch(checkLogin(false));
         console.log(err);

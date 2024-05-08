@@ -85,7 +85,10 @@ const Login = () => {
   return (
     <section className="flex flex-col justify-center bg-slate-800 items-center h-screen ">
       <img src="./icon.png" className="w-[250px]" alt="" />
-      <form className="flex flex-col w-1/3 p-10 gap-4" onSubmit={loginUser}>
+      <form
+        className="flex flex-col w-full lg:w-1/2 xl:w-1/3 p-10 gap-4"
+        onSubmit={loginUser}
+      >
         {errorAdmin.error ? (
           <h1 className="text-xl text-red-600">{errorAdmin.message}</h1>
         ) : null}

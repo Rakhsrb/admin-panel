@@ -1,15 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Admins = () => {
   const { admins } = useSelector((state) => state.mainSlice);
-  const { data } = admins;
-  let path = useNavigate();
-
-  function toEditPage(admin) {
-    path(`/edit-admin/${admin.id}`);
-  }
+  const { data, isError, isPending } = admins;
   return (
     <section className="h-screen p-5 bg-cyan-50 overflow-y-auto">
       <div className="h-[20vh] flex justify-between items-center ">
@@ -43,7 +38,7 @@ export const Admins = () => {
                     View
                   </Link>
                   <Link
-                    onClick={() => toEditPage(elem)}
+                    to={`/edit-admin/${elem.id}`}
                     className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                   >
                     Edit
@@ -55,7 +50,9 @@ export const Admins = () => {
               </tr>
             ))
           ) : (
-            <h1>No Data...</h1>
+            <tr>
+              <td>No Data...</td>
+            </tr>
           )}
         </tbody>
       </table>

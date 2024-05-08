@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateWorkerInfo } from "../../toolkit/Slicer";
 
 const EditWorker = () => {
   const dispatch = useDispatch();
