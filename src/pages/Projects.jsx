@@ -6,9 +6,7 @@ export const Projects = () => {
   const { portfolio } = useSelector((state) => state.mainSlice);
   const { data, isError, isPending } = portfolio;
 
-  useEffect(()=>{
-    async 
-  },[])
+  useEffect(() => {}, []);
 
   return (
     <section className="h-full p-5 bg-cyan-50">

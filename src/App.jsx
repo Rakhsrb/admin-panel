@@ -23,16 +23,19 @@ import { Team } from "./pages/Team";
 import { checkLogin } from "./toolkit/Slicer";
 import axios from "axios";
 function App() {
-  const { userData } = useSelector((state) => state.mainSlice);
+  const { userData, config } = useSelector((state) => state.mainSlice);
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function getUser(id) {
       try {
         const response = await axios.get(
-          "https://uitc-backend.onrender.com/api/admin/" + id
-        );
-        dispatch(checkLogin(true));
+          "https://uitc-backend.onrender.com/api/admin/" + id,
+          config
+        ).data;
+        if (response) {
+          dispatch(checkLogin(true));
+        }
       } catch (err) {
         dispatch(checkLogin(false));
         console.log(err);

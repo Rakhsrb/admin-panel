@@ -34,6 +34,11 @@ const MainSlice = createSlice({
       isError: false,
     },
     baseUrlApi: "https://uitc-backend.onrender.com/",
+    config: {
+      headers: {
+        Authorization: JSON.parse(localStorage.getItem("token")),
+      },
+    },
   },
   reducers: {
     getAdminsPending(state) {
