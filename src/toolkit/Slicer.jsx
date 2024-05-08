@@ -142,7 +142,6 @@ const MainSlice = createSlice({
     },
     userData: {
       isLogin: false,
-      admin: JSON.parse(localStorage.getItem("adminInfo")),
     },
   },
   reducers: {
@@ -254,10 +253,7 @@ const MainSlice = createSlice({
       return state;
     },
     checkLogin: (state, { payload }) => {
-      state = {
-        ...state,
-        isLogin: payload,
-      };
+      state = { ...state, userData: { ...state.userData, isLogin: payload } };
       return state;
     },
   },

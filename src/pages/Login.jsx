@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { checkLogin } from "../toolkit/Slicer";
 
 const Login = () => {
-  const { isLogin } = useSelector((state) => state.mainSlice);
+  const { userData } = useSelector((state) => state.mainSlice);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,10 +25,10 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (isLogin) {
+    if (userData.isLogin) {
       navigate("/");
     }
-  }, []);
+  }, [userData.isLogin]);
 
   const handleGetValues = (e) => {
     setUserInfo({
@@ -108,7 +108,6 @@ const Login = () => {
               name="email"
               id="adminEmail"
               className="outline-none p-2 rounded-md"
-              value={userInfo.email}
               onChange={handleGetValues}
             />
           </div>
@@ -129,7 +128,6 @@ const Login = () => {
                 className="outline-none w-full"
                 name="password"
                 id="adminPassword"
-                value={userInfo.password}
                 onChange={handleGetValues}
               />
               <span
