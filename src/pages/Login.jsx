@@ -26,7 +26,7 @@ const Login = () => {
     try {
       const response = await axios.post(
         "https://uitc-backend.onrender.com/api/admin/login",
-        { ...userInfo }
+        userInfo
       );
       if (response.status === 200) {
         dispatch(loginUser(response.data));
