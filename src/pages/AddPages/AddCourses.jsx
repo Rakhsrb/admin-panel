@@ -1,9 +1,92 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddCourses = () => {
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
+  const [imgSaved, setImgSaved] = useState(false);
+
+  const [courseData, setCourseData] = useState({
+    title: "",
+    description: "",
+    price: "",
+    image: "",
+  });
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userData.isLogin) {
+      navigate("/");
+    }
+  }, []);
+
+  const handleGetValues = (e) => {
+    const { name, value } = e.target;
+    setCourseData((prev) => ({ ...prev, [name]: value }));
+    setImgSaved(false);
+  };
+
+  const handleFileChange = async (e) => {
+    try {
+      const formImageData = new FormData();
+      const file = e.target.files[0];
+      formImageData.append("images", file);
+      setImgSaved(true);
+      const { data } = await axios.post(
+        baseUrlApi + "api/uploads",
+        formImageData,
+        config
+      );
+      console.log(data);
+      setCourseData((prevCourse) => ({
+        ...prevCourse,
+        image: data.images[0],
+      }));
+      setImgSaved(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addNewCourse = async (e) => {
+    e.preventDefault();
+    const courseForm = {
+      title: courseData.title,
+      description: courseData.description,
+      price: courseData.price,
+      image: courseData.image,
+    };
+    try {
+      const response = await axios.post(
+        baseUrlApi + "api/courses/create",
+        courseForm,
+        config
+      );
+      setCourseData({
+        title: "",
+        description: "",
+        price: "",
+        image: "",
+      });
+      navigate("/courses");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Yangi Kurs Qo'shildi",
+        showConfirmButton: false,
+        timer: 3500,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
-      <form className="border p-10 rounded-md bg-white">
+      <form className="border p-10 rounded-md bg-white" onSubmit={addNewCourse}>
         <h1 className="text-4xl font-semibold mb-7">Yangi Kurs Qo'shish</h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -11,7 +94,8 @@ const AddCourses = () => {
               Kurs Nomi:
             </label>
             <input
-              required
+              value={courseData.title}
+              onChange={handleGetValues}
               placeholder="Kurs nomini kiriting"
               type="text"
               className="border py-2 px-5 text-md"
@@ -24,7 +108,8 @@ const AddCourses = () => {
               Kurs haqida malumot:
             </label>
             <textarea
-              required
+              value={courseData.description}
+              onChange={handleGetValues}
               placeholder="Kurs haqida malumot kiriting"
               className="border py-2 px-5 text-md min-h-32"
               id="courseDescription"
@@ -36,11 +121,13 @@ const AddCourses = () => {
               Kurs narxi:
             </label>
             <input
-              required
-              type="text"
+              value={courseData.price}
+              onChange={handleGetValues}
+              type="number"
               placeholder="Kurs narxini kiriting"
               className="border py-1 px-5 text-lg "
               id="coursePrice"
+              name="price"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -48,11 +135,11 @@ const AddCourses = () => {
               Rasm:
             </label>
             <input
-              required
               type="file"
               className="border py-1 px-5 text-lg "
               id="courseImage"
               name="image"
+              onChange={handleFileChange}
             />
           </div>
         </div>

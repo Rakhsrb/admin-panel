@@ -1,45 +1,65 @@
 import { Eye, EyeClosed } from "@phosphor-icons/react";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 
 const EditAdmin = () => {
   const [showPass, setShowPass] = useState(false);
-  const dispatch = useDispatch();
   const path = useNavigate();
-  const { admins } = useSelector((state) => state.mainSlice);
-  const { data } = admins;
-  const adminID = useParams().id;
-  const admin = data.find((item) => item.id === +adminID);
-  const [editedAdmin, setEditedAdmin] = useState({
-    id: adminID,
-    name: admin.name,
-    email: admin.email,
-    password: "",
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
+  const { id } = useParams();
+  const [adminData, setAdminData] = useState({
+    name: "",
+    email: "",
+    // password: "",
   });
 
+  useEffect(() => {
+    if (!userData.isLogin) {
+      path("/");
+    }
+  }, [userData.isLogin, path]);
+
+  useEffect(() => {
+    async function getDataById() {
+      try {
+        const response = await axios.get(
+          baseUrlApi + `api/admin/${id}`,
+          config
+        );
+        setAdminData(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getDataById();
+  }, [id]);
+
   const getUpdatedValues = (e) => {
-    setEditedAdmin({
-      ...editedAdmin,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setAdminData((prevAdmin) => ({
+      ...prevAdmin,
+      [name]: value,
+    }));
   };
 
-  const submitUpdatedInfo = (e) => {
+  const submitUpdatedInfo = async (e) => {
     e.preventDefault();
-    dispatch(updateAdminInfo(editedAdmin));
-    if (admin.password === editedAdmin.password) {
+    try {
+      const response = await axios.put(
+        baseUrlApi + `api/admin/update/${id}`,
+        adminData,
+        config
+      );
       path("/admins");
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Brat parol tugri kiriting",
-      });
+    } catch (error) {
+      console.log(error);
     }
   };
-
 
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
@@ -62,7 +82,7 @@ const EditAdmin = () => {
               className="border py-2 px-5 text-md"
               id="adminName"
               name="name"
-              value={editedAdmin.name}
+              value={adminData.name}
               onChange={getUpdatedValues}
             />
           </div>
@@ -77,11 +97,11 @@ const EditAdmin = () => {
               className="border py-2 px-5 text-md"
               id="adminEmail"
               name="email"
-              value={editedAdmin.email}
+              value={adminData.email}
               onChange={getUpdatedValues}
             />
           </div>
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <label htmlFor="adminPassword" className="text-lg">
               Parolni tasdiqlang:
             </label>
@@ -103,7 +123,7 @@ const EditAdmin = () => {
                 {showPass ? <Eye /> : <EyeClosed />}
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
         <button
           type="submit"

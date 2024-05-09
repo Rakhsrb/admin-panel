@@ -5,48 +5,76 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddProjects = () => {
-  const { userData, baseUrlApi, config } = useSelector(state => state.mainSlice)
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
   const [imgSaved, setImgSaved] = useState(false);
   const [portfolioData, setPortfolioData] = useState({
     title: "",
     description: "",
     category: "",
     url: "",
-    images: []
-  })
-  const navigate = useNavigate()
+    images: [],
+  });
+  const navigate = useNavigate();
   useEffect(() => {
     if (!userData.isLogin) {
       navigate("/");
     }
   }, []);
 
-
   const hangleGetValues = (e) => {
-    const { name, value } = e.target
-    setPortfolioData((prev) => ({ ...prev, [name]: value }))
-    setImgSaved(false)
-  }
+    const { name, value } = e.target;
+    setPortfolioData((prev) => ({ ...prev, [name]: value }));
+    setImgSaved(false);
+  };
 
+  const handleFileChange = async (e) => {
+    try {
+      const formImageData = new FormData();
+      const files = e.target.files;
+      for (let i = 0; i < files.length; i++) {
+        formImageData.append("images", files[i]);
+      }
+      setImgSaved(true);
+      const { data } = await axios.post(
+        baseUrlApi + "api/uploads",
+        formImageData,
+        config
+      );
+      setPortfolioData((prevFormData) => ({
+        ...prevFormData,
+        images: [...prevFormData.images, ...data.images],
+      }));
+      setImgSaved(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const sendPortfolio = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const portfolioForm = {
       title: portfolioData.title,
       description: portfolioData.description,
       category: portfolioData.category,
       images: portfolioData.images,
-      url: portfolioData.url
+      url: portfolioData.url,
     };
+    console.log(portfolioForm);
     try {
-      const response = await axios.post(baseUrlApi + "api/projects/create", portfolioForm, config)
+      const response = await axios.post(
+        baseUrlApi + "api/projects/create",
+        portfolioForm,
+        config
+      );
       setPortfolioData({
         title: "",
         description: "",
         category: "",
         url: "",
-        images: []
-      })
+        images: [],
+      });
       navigate("/projects");
       Swal.fire({
         position: "top-end",
@@ -56,12 +84,15 @@ const AddProjects = () => {
         timer: 3500,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
-      <form className="border p-10 rounded-md bg-white" onSubmit={sendPortfolio}>
+      <form
+        className="border p-10 rounded-md bg-white"
+        onSubmit={sendPortfolio}
+      >
         <h1 className="text-4xl font-semibold mb-7">Portfolio Qo'shish</h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -131,7 +162,7 @@ const AddProjects = () => {
               Rasm:
             </label>
             <input
-              onChange={hangleGetValues}
+              onChange={handleFileChange}
               type="file"
               className="border py-1 px-5 text-lg "
               id="courseImage"

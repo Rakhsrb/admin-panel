@@ -112,6 +112,29 @@ const MainSlice = createSlice({
       state.userData.isPending = false;
       state.userData.isError = true;
     },
+    deleteProject(state, { payload }) {
+      state.portfolio.data = state.portfolio.data.filter(
+        (item) => item._id !== payload
+      );
+    },
+    deleteCourse(state, { payload }) {
+      state.courses.data = state.courses.data.filter(
+        (item) => item._id !== payload
+      );
+    },
+    deleteService(state, { payload }) {
+      state.services.data = state.services.data.filter(
+        (item) => item._id !== payload
+      );
+    },
+    deleteWorker(state, { payload }) {
+      state.team.data = state.team.data.filter((item) => item._id !== payload);
+    },
+    deleteAdmin(state, { payload }) {
+      state.admins.data = state.admins.data.filter(
+        (item) => item._id !== payload
+      );
+    },
   },
 });
 
@@ -134,5 +157,10 @@ export const {
   checkLogin,
   checkLoginPending,
   checkLoginError,
+  deleteProject,
+  deleteService,
+  deleteWorker,
+  deleteCourse,
+  deleteAdmin,
 } = MainSlice.actions;
 export default MainSlice.reducer;

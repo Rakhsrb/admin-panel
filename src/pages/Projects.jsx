@@ -2,7 +2,9 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
+  deleteProject,
   getProjectsError,
   getProjectsPending,
   getProjectsSuccess,
@@ -10,7 +12,9 @@ import {
 
 export const Projects = () => {
   const dispatch = useDispatch();
-  const { portfolio, baseUrlApi } = useSelector((state) => state.mainSlice);
+  const { portfolio, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
   const { data, isError, isPending } = portfolio;
 
   useEffect(() => {
@@ -26,6 +30,36 @@ export const Projects = () => {
     }
     getData(baseUrlApi);
   }, []);
+
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (confirm.isConfirmed) {
+      try {
+        await axios.delete(baseUrlApi + "api/projects/delete/" + id, config);
+        dispatch(deleteProject(id));
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete project.",
+          icon: "error",
+        });
+      }
+    }
+  };
 
   return (
     <section className="h-full p-5 bg-cyan-50">
@@ -62,7 +96,7 @@ export const Projects = () => {
                   <td>{elem.title}</td>
                   <td>
                     {elem.images.length > 0 ? (
-                      <img src={elem.images} alt="" />
+                      <img src={elem.images[0]} alt="" />
                     ) : (
                       "No image"
                     )}
@@ -81,7 +115,10 @@ export const Projects = () => {
                     >
                       Edit
                     </Link>
-                    <button className="bg-red-800 text-white rounded-md p-2">
+                    <button
+                      onClick={() => handleDelete(elem._id)}
+                      className="bg-red-800 text-white rounded-md p-2"
+                    >
                       Delete
                     </button>
                   </td>

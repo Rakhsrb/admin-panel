@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getAdminsError,
   getAdminsPending,
@@ -9,6 +9,7 @@ import {
 } from "../toolkit/Slicer";
 
 export const Admins = () => {
+  const navigate = useNavigate();
   const { admins, baseUrlApi, config } = useSelector(
     (state) => state.mainSlice
   );
@@ -54,36 +55,34 @@ export const Admins = () => {
             <tr className="text-center border-2 border-cyan-800">
               <td>Loading...</td>
             </tr>
-          ) : (
-            data.length > 0 ? (
-              data.map((elem) => (
-                <tr
-                  key={elem._id}
-                  className="text-center border-2 border-cyan-800"
-                >
-                  <td>{elem.name}</td>
-                  <td>{elem.email}</td>
-                  <td>
-                    <Link className="bg-green-900 text-white rounded-md p-2">
-                      View
-                    </Link>
-                    <Link
-                      to={`/edit-admin/${elem._id}`}
-                      className="bg-cyan-900 text-white rounded-md p-2 mx-3"
-                    >
-                      Edit
-                    </Link>
-                    <button className="bg-red-800 text-white rounded-md p-2">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr className="text-center border-2 border-cyan-800">
-                <td>No Data...</td>
+          ) : data.length > 0 ? (
+            data.map((elem) => (
+              <tr
+                key={elem._id}
+                className="text-center border-2 border-cyan-800 bg-white"
+              >
+                <td>{elem.name}</td>
+                <td>{elem.email}</td>
+                <td>
+                  <Link className="bg-green-900 text-white rounded-md p-2">
+                    View
+                  </Link>
+                  <Link
+                    to={`/edit-admin/${elem._id}`}
+                    className="bg-cyan-900 text-white rounded-md p-2 mx-3"
+                  >
+                    Edit
+                  </Link>
+                  <button className="bg-red-800 text-white rounded-md p-2">
+                    Delete
+                  </button>
+                </td>
               </tr>
-            )
+            ))
+          ) : (
+            <tr className="text-center border-2 border-cyan-800">
+              <td>No Data...</td>
+            </tr>
           )}
         </tbody>
       </table>

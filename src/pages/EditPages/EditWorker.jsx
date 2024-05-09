@@ -1,40 +1,59 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditWorker = () => {
-  const dispatch = useDispatch();
   const path = useNavigate();
-  const { team } = useSelector((state) => state.mainSlice);
-  const { data } = team;
-  const workerID = useParams().id;
-  const worker = data.find((item) => item.id === +workerID);
-  const [editedWorker, setEditedWorker] = useState({
-    id: workerID,
-    name: worker.name,
-    job: worker.job,
-    image: worker.image,
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
+  const { id } = useParams();
+  const [imgSaved, setImgSaved] = useState(false);
+  const [workerData, setWorkerData] = useState({
+    name: "",
+    job: "",
+    image: "",
   });
 
-  const getUpdatedValues = (e) => {
-    if (e.target.type === "file") {
-      setEditedWorker({
-        ...editedWorker,
-        image: URL.createObjectURL(e.target.files[0]),
-      });
-    } else {
-      setEditedWorker({
-        ...editedWorker,
-        [e.target.name]: e.target.value,
-      });
+  useEffect(() => {
+    if (!userData.isLogin) {
+      path("/");
     }
+  }, [userData.isLogin, path]);
+
+  useEffect(() => {
+    async function getDataById() {
+      try {
+        const response = await axios.get(baseUrlApi + `api/team/${id}`);
+        setWorkerData(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getDataById();
+  }, [id]);
+
+  const getUpdatedValues = (e) => {
+    const { name, value } = e.target;
+    setWorkerData((prevProject) => ({
+      ...prevProject,
+      [name]: value,
+    }));
+    setImgSaved(false);
   };
 
-  const submitUpdatedInfo = (e) => {
+  const submitUpdatedInfo = async (e) => {
     e.preventDefault();
-    dispatch(updateWorkerInfo(editedWorker));
-    if (worker.password === editedWorker.password) {
+    try {
+      const response = await axios.put(
+        baseUrlApi + `api/team/update/${id}`,
+        workerData,
+        config
+      );
       path("/team");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -59,7 +78,7 @@ const EditWorker = () => {
               className="border py-2 px-5 text-md"
               id="workerName"
               name="name"
-              value={editedWorker.name}
+              value={workerData.name}
               onChange={getUpdatedValues}
             />
           </div>
@@ -74,7 +93,7 @@ const EditWorker = () => {
               className="border py-2 px-5 text-md"
               id="workerJob"
               name="job"
-              value={editedWorker.job}
+              value={workerData.job}
               onChange={getUpdatedValues}
             />
           </div>

@@ -47,7 +47,9 @@ export const Project = () => {
             </h1>
             <h1 className="p-10 text-2xl text-white odd">
               <span>URL:</span>{" "}
-              <a href={`https://${onePortfolio.url}`}>{onePortfolio.url}</a>
+              <a className="underline" href={`https://${onePortfolio.url}`}>
+                {onePortfolio.url}
+              </a>
             </h1>
             <div className="grid grid-cols-3">
               {onePortfolio.images?.map((item, index) => (

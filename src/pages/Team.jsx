@@ -2,11 +2,17 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getTeamError, getTeamPending, getTeamSuccess } from "../toolkit/Slicer";
+import Swal from "sweetalert2";
+import {
+  deleteWorker,
+  getTeamError,
+  getTeamPending,
+  getTeamSuccess,
+} from "../toolkit/Slicer";
 
 export const Team = () => {
   const dispatch = useDispatch();
-  const { team, baseUrlApi } = useSelector((state) => state.mainSlice);
+  const { team, baseUrlApi, config } = useSelector((state) => state.mainSlice);
   const { data, isError, isPending } = team;
 
   useEffect(() => {
@@ -22,6 +28,36 @@ export const Team = () => {
     }
     getData(baseUrlApi);
   }, []);
+
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (confirm.isConfirmed) {
+      try {
+        dispatch(deleteWorker(id));
+        await axios.delete(baseUrlApi + "api/team/delete/" + id, config);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete project.",
+          icon: "error",
+        });
+      }
+    }
+  };
 
   return (
     <section className="h-full p-5 bg-cyan-50">
@@ -44,16 +80,16 @@ export const Team = () => {
           </tr>
         </thead>
         <tbody className="text-center">
-          {isPending ? (
-            <tr className="text-center border-2 border-cyan-800">
-              < td > Loading...</td>
-            </tr>
-          ) : (
-            data.length > 0 ? (
+          {!isError ? (
+            isPending ? (
+              <tr className="text-center border-2 border-cyan-800">
+                <td>Loading...</td>
+              </tr>
+            ) : data.length > 0 ? (
               data.map((elem) => (
                 <tr
                   key={elem._id}
-                  className="text-center border-2 border-cyan-800"
+                  className="text-center border-2 border-cyan-800 bg-white"
                 >
                   <td>{elem.name}</td>
                   <td className="flex justify-center">
@@ -70,7 +106,10 @@ export const Team = () => {
                     >
                       Edit
                     </Link>
-                    <button className="bg-red-800 text-white rounded-md p-2">
+                    <button
+                      onClick={() => handleDelete(elem._id)}
+                      className="bg-red-800 text-white rounded-md p-2"
+                    >
                       Delete
                     </button>
                   </td>
@@ -81,9 +120,13 @@ export const Team = () => {
                 <td>No Data...</td>
               </tr>
             )
+          ) : (
+            <tr className="text-center border-2 border-cyan-800">
+              <td>Not Found. Some thing went wrong</td>
+            </tr>
           )}
         </tbody>
-      </table >
-    </section >
+      </table>
+    </section>
   );
 };

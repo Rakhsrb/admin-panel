@@ -1,38 +1,62 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditCourse = () => {
-  const dispatch = useDispatch();
   const path = useNavigate();
-  const { courses } = useSelector((state) => state.mainSlice);
-  const { data } = courses;
-  const courseID = useParams().id;
-  const course = data.find((item) => item.id === +courseID);
-  const [editedCourse, setEditedCourse] = useState({
-    id: courseID,
-    title: course.title,
-    price: course.price,
-    description: course.description,
-    image: course.image,
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
+  const { id } = useParams();
+  const [imgSaved, setImgSaved] = useState(false);
+  const [courseData, setCourseData] = useState({
+    title: "",
+    price: "",
+    description: "",
+    images: [],
   });
+
+  useEffect(() => {
+    if (!userData.isLogin) {
+      path("/");
+    }
+  }, [userData.isLogin, path]);
+
+  useEffect(() => {
+    async function getDataById() {
+      try {
+        const response = await axios.get(baseUrlApi + `api/courses/${id}`);
+        setCourseData(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getDataById();
+  }, [id]);
+
   const getUpdatedValues = (e) => {
-    if (e.target.type === "file") {
-      setEditedCourse({
-        ...editedCourse,
-        image: URL.createObjectURL(e.target.files[0]),
-      });
-    } else {
-      setEditedCourse({ ...editedCourse, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setCourseData((prevProject) => ({
+      ...prevProject,
+      [name]: value,
+    }));
+    setImgSaved(false);
+  };
+
+  const submitUpdatedInfo = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        baseUrlApi + `api/courses/update/${id}`,
+        courseData,
+        config
+      );
+      path("/courses");
+    } catch (error) {
+      console.log(error);
     }
   };
-
-  const submitUpdatedInfo = (e) => {
-    e.preventDefault();
-    dispatch(updateCourseInfo(editedCourse));
-    path("/courses");
-  };
-
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form
@@ -94,7 +118,6 @@ const EditCourse = () => {
               type="file"
               className="border py-1 px-5 text-lg "
               id="courseImage"
-              // value={editedCourse.image}
               onChange={getUpdatedValues}
               name="image"
             />

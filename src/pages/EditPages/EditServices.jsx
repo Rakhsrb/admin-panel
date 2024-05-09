@@ -1,41 +1,63 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditService = () => {
-  const dispatch = useDispatch();
   const path = useNavigate();
-  const { services } = useSelector((state) => state.mainSlice);
-  const { data } = services;
-  const serviceID = useParams().id;
-  const service = data.find((item) => item.id === +serviceID);
-  const [editedService, setEditedService] = useState({
-    id: serviceID,
-    title: service.title,
-    description: service.description,
-    image: service.image,
-    category: service.category,
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
+  const { id } = useParams();
+  const [imgSaved, setImgSaved] = useState(false);
+  const [serviceData, setSericeData] = useState({
+    title: "",
+    description: "",
+    category: "",
+    images: [],
   });
 
+  useEffect(() => {
+    if (!userData.isLogin) {
+      path("/");
+    }
+  }, [userData.isLogin, path]);
+
+  useEffect(() => {
+    async function getDataById() {
+      try {
+        const response = await axios.get(baseUrlApi + `api/services/${id}`);
+        setSericeData(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getDataById();
+  }, [id]);
+
   const getUpdatedValues = (e) => {
-    if (e.target.type === "file") {
-      setEditedService({
-        ...editedService,
-        image: URL.createObjectURL(e.target.files[0]),
-      });
-    } else {
-      setEditedService({
-        ...editedService,
-        [e.target.name]: e.target.value,
-      });
+    const { name, value } = e.target;
+    setSericeData((prevProject) => ({
+      ...prevProject,
+      [name]: value,
+    }));
+    setImgSaved(false);
+  };
+
+  const submitUpdatedInfo = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        baseUrlApi + `api/services/update/${id}`,
+        serviceData,
+        config
+      );
+      path("/services");
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const submitUpdatedInfo = (e) => {
-    e.preventDefault();
-    dispatch(updateServiceInfo(editedService));
-    path("/services");
-  };
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form
@@ -57,7 +79,7 @@ const EditService = () => {
               className="border py-2 px-5 text-md"
               id="serviceTitle"
               name="title"
-              value={editedService.title}
+              value={serviceData.title}
               onChange={getUpdatedValues}
             />
           </div>
@@ -71,7 +93,7 @@ const EditService = () => {
               className="border py-2 px-5 text-md min-h-32"
               id="serviceDescription"
               name="description"
-              value={editedService.description}
+              value={serviceData.description}
               onChange={getUpdatedValues}
             ></textarea>
           </div>
@@ -83,7 +105,7 @@ const EditService = () => {
               className="border py-2 px-2"
               name="category"
               id="serviceCategory"
-              value={editedService.category}
+              value={serviceData.category}
               onChange={getUpdatedValues}
             >
               <option value="" hidden>

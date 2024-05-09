@@ -5,16 +5,18 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddServices = () => {
-  const { userData, baseUrlApi, config } = useSelector(state => state.mainSlice)
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
   const [imgSaved, setImgSaved] = useState(false);
   const [serviceData, setServiceData] = useState({
     title: "",
     description: "",
     category: "",
-    images: []
-  })
+    images: "",
+  });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userData.isLogin) {
@@ -22,16 +24,58 @@ const AddServices = () => {
     }
   }, []);
 
+  const handleGetValues = async (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      try {
+        const formImageData = new FormData();
+        const file = files[0];
+        formImageData.append("images", file);
+        setImgSaved(true);
+        const { data } = await axios.post(
+          baseUrlApi + "api/uploads",
+          formImageData,
+          config
+        );
+        console.log(data);
+        setCourseData((prevCourse) => ({
+          ...prevCourse,
+          images: data.images[0],
+        }));
+        setImgSaved(false);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setServiceData((prev) => ({ ...prev, [name]: value }));
+    }
+    setImgSaved(false);
+  };
 
-  const handleGetValues = (e) => {
-    const { name, value } = e.target
-    setServiceData((prev) => ({ ...prev, [name]: value }))
-    setImgSaved(false)
-  }
-
+  const handleFileChange = async (e) => {
+    try {
+      const formImageData = new FormData();
+      const file = e.target.files[0];
+      formImageData.append("images", file);
+      setImgSaved(true);
+      const { data } = await axios.post(
+        baseUrlApi + "api/uploads",
+        formImageData,
+        config
+      );
+      console.log(data);
+      setCourseData((prevCourse) => ({
+        ...prevCourse,
+        image: data.images[0],
+      }));
+      setImgSaved(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const sendService = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const serviceForm = {
       title: serviceData.title,
       description: serviceData.description,
@@ -40,13 +84,17 @@ const AddServices = () => {
     };
 
     try {
-      const response = await axios.post(baseUrlApi + "api/services/create", serviceForm, config)
+      const response = await axios.post(
+        baseUrlApi + "api/services/create",
+        serviceForm,
+        config
+      );
       setServiceData({
         title: "",
         description: "",
         category: "",
-        images: []
-      })
+        images: "",
+      });
       navigate("/services");
       Swal.fire({
         position: "top-end",
@@ -56,9 +104,9 @@ const AddServices = () => {
         timer: 3500,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form className="border p-10 rounded-md bg-white" onSubmit={sendService}>
@@ -119,7 +167,7 @@ const AddServices = () => {
               type="file"
               className="border py-1 px-5 text-lg "
               id="serviceImage"
-              onChange={handleGetValues}
+              onChange={handleFileChange}
               name="image"
             />
           </div>
