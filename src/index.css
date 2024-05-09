@@ -57,3 +57,19 @@ table td {
 table td img {
   width: 60px;
 }
+
+.odd:nth-child(odd) {
+  background: #cdcdcd;
+  color: #18282a;
+}
+.odd:nth-child(odd) span {
+  color: #0267ff;
+  padding: 10px 20px;
+}
+.odd:nth-child(even) {
+  color: #18282a;
+}
+.odd:nth-child(even) span {
+  color: #0267ff;
+  padding: 10px 20px;
+}

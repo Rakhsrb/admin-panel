@@ -27,8 +27,6 @@ export const Projects = () => {
     getData(baseUrlApi);
   }, []);
 
-
-
   return (
     <section className="h-full p-5 bg-cyan-50">
       <div className="h-[20vh] flex justify-between items-center">
@@ -50,26 +48,31 @@ export const Projects = () => {
           </tr>
         </thead>
         <tbody className="text-center">
-          {isPending ? (
-            <tr className="text-center border-2 border-cyan-800">
-              <td>Loading...</td>
-            </tr>
-          ) : (
-            data.length > 0 ? (
+          {!isError ? (
+            isPending ? (
+              <tr className="text-center border-2 border-cyan-800">
+                <td>Loading...</td>
+              </tr>
+            ) : data.length > 0 ? (
               data.map((elem) => (
                 <tr
                   key={elem._id}
-                  className="text-center border-2 border-cyan-800"
+                  className="text-center border-2 border-cyan-800 bg-white"
                 >
                   <td>{elem.title}</td>
                   <td>
-                    {elem.images.length > 0 ?
+                    {elem.images.length > 0 ? (
                       <img src={elem.images} alt="" />
-                      : "No image"}
+                    ) : (
+                      "No image"
+                    )}
                   </td>
                   <td>{elem.category}</td>
                   <td>
-                    <Link className="bg-green-900 text-white rounded-md p-2">
+                    <Link
+                      to={`/project/${elem._id}`}
+                      className="bg-green-900 text-white rounded-md p-2"
+                    >
                       View
                     </Link>
                     <Link
@@ -89,6 +92,10 @@ export const Projects = () => {
                 <td>No Data...</td>
               </tr>
             )
+          ) : (
+            <tr className="text-center border-2 border-cyan-800">
+              <td>Not Found. Some thing went wrong</td>
+            </tr>
           )}
         </tbody>
       </table>

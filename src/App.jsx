@@ -22,6 +22,7 @@ import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
 import { checkLogin } from "./toolkit/Slicer";
 import axios from "axios";
+import { Project } from "./pages/Details/Project";
 function App() {
   const { userData, config } = useSelector((state) => state.mainSlice);
   const dispatch = useDispatch();
@@ -124,6 +125,11 @@ function App() {
             {
               path: "*",
               element: <NotFound />,
+            },
+            // Details
+            {
+              path: "/project/:id",
+              element: <Project />,
             },
           ],
         }

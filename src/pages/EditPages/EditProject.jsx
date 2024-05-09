@@ -5,12 +5,14 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const EditProject = () => {
   const path = useNavigate();
-  const { userData, baseUrlApi, config } = useSelector((state) => state.mainSlice);
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
   const { id } = useParams();
   const [imgSaved, setImgSaved] = useState(false);
   const [portfolioData, setPortfolioData] = useState({
-    images: []
-  })
+    images: [],
+  });
 
   useEffect(() => {
     if (!userData.isLogin) {
@@ -21,17 +23,16 @@ const EditProject = () => {
   useEffect(() => {
     async function getDataById() {
       try {
-        const response = await axios.get(baseUrlApi + `api/projects/${id}`)
-        setPortfolioData(response.data.data)
+        const response = await axios.get(baseUrlApi + `api/projects/${id}`);
+        setPortfolioData(response.data.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-    getDataById()
-  }, [id])
+    getDataById();
+  }, [id]);
 
   const getUpdatedValues = (e) => {
-
     const { name, value } = e.target;
     setPortfolioData((prevProject) => ({
       ...prevProject,
@@ -41,12 +42,16 @@ const EditProject = () => {
   };
 
   const submitUpdatedInfo = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const response = await axios.put(baseUrlApi + `api/projects/update/${id}`, portfolioData, config)
+      const response = await axios.put(
+        baseUrlApi + `api/projects/update/${id}`,
+        portfolioData,
+        config
+      );
       path("/projects");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -55,7 +60,7 @@ const EditProject = () => {
         className="border p-10 rounded-md bg-white"
         onSubmit={submitUpdatedInfo}
       >
-        <h1 className="text-4xl font-semibold mb-7">Portfolio Ynagilash</h1>
+        <h1 className="text-4xl font-semibold mb-7">Portfolio Yangilash</h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label htmlFor="portfolioTitle" className="text-lg">
