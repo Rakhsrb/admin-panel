@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddServices = () => {
-
   const { userData, baseUrlApi, config } = useSelector(state => state.mainSlice)
   const [imgSaved, setImgSaved] = useState(false);
   const [serviceData, setServiceData] = useState({
