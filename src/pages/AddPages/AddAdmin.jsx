@@ -23,16 +23,17 @@ const AddAdmin = () => {
 
 
   const handleGetValues = (e) => {
-    setAdminData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    const { name, value } = e.target
+    setAdminData((prev) => ({ ...prev, [name]: value }))
   }
 
 
   const AddNewAdmin = async (e) => {
     e.preventDefault()
     const adminForm = {
-      name: adminData.title,
-      email: adminData.description,
-      password: adminData.category,
+      name: adminData.name,
+      email: adminData.email,
+      password: adminData.password,
 
     };
     try {

@@ -32,8 +32,8 @@ const AddWorker = () => {
   const sendWorker = async (e) => {
     e.preventDefault()
     const workerForm = {
-      name: workerData.title,
-      job: workerData.description,
+      name: workerData.name,
+      job: workerData.job,
       image: workerData.image,
     };
     try {
