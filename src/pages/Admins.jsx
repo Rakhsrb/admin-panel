@@ -64,7 +64,10 @@ export const Admins = () => {
                 <td>{elem.name}</td>
                 <td>{elem.email}</td>
                 <td>
-                  <Link className="bg-green-900 text-white rounded-md p-2">
+                  <Link
+                    to={`/admin/${elem._id}`}
+                    className="bg-green-900 text-white rounded-md p-2"
+                  >
                     View
                   </Link>
                   <Link

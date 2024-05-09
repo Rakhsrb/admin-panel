@@ -101,7 +101,10 @@ export const Services = () => {
                   <td>{elem.description}</td>
                   <td>{elem.category}</td>
                   <td>
-                    <Link className="bg-green-900 text-white rounded-md p-2">
+                    <Link
+                      to={`/service/${elem._id}`}
+                      className="bg-green-900 text-white rounded-md p-2"
+                    >
                       View
                     </Link>
                     <Link

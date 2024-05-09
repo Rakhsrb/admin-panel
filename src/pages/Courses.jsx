@@ -102,7 +102,7 @@ export const Courses = () => {
                   <td>{elem.price}</td>
                   <td>
                     <Link
-                      to={`/project/${elem._id}`}
+                      to={`/course/${elem._id}`}
                       className="bg-green-900 text-white rounded-md p-2"
                     >
                       View

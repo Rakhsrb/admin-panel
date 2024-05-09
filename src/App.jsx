@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -10,6 +11,11 @@ import AddWorker from "./pages/AddPages/AddWorker";
 import { Admins } from "./pages/Admins";
 import { Courses } from "./pages/Courses";
 import { Dashboard } from "./pages/Dashboard";
+import Admin from "./pages/Details/Admin";
+import Course from "./pages/Details/Course";
+import { Project } from "./pages/Details/Project";
+import Service from "./pages/Details/Service";
+import Worker from "./pages/Details/Worker";
 import EditAdmin from "./pages/EditPages/EditAdmin";
 import EditCourse from "./pages/EditPages/EditCourse";
 import EditProject from "./pages/EditPages/EditProject";
@@ -21,8 +27,6 @@ import { Projects } from "./pages/Projects";
 import { Services } from "./pages/Services";
 import { Team } from "./pages/Team";
 import { checkLogin } from "./toolkit/Slicer";
-import axios from "axios";
-import { Project } from "./pages/Details/Project";
 function App() {
   const { userData, config } = useSelector((state) => state.mainSlice);
   const dispatch = useDispatch();
@@ -130,6 +134,22 @@ function App() {
             {
               path: "/project/:id",
               element: <Project />,
+            },
+            {
+              path: "/admin/:id",
+              element: <Admin />,
+            },
+            {
+              path: "/course/:id",
+              element: <Course />,
+            },
+            {
+              path: "/service/:id",
+              element: <Service />,
+            },
+            {
+              path: "/worker/:id",
+              element: <Worker />,
             },
           ],
         }

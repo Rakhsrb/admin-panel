@@ -97,7 +97,10 @@ export const Team = () => {
                   </td>
                   <td>{elem.job}</td>
                   <td>
-                    <Link className="bg-green-900 text-white rounded-md p-2">
+                    <Link
+                      to={`/worker/${elem._id}`}
+                      className="bg-green-900 text-white rounded-md p-2"
+                    >
                       View
                     </Link>
                     <Link
