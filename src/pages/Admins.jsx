@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -6,7 +7,6 @@ import {
   getAdminsPending,
   getAdminsSuccess,
 } from "../toolkit/Slicer";
-import axios from "axios";
 
 export const Admins = () => {
   const { admins, baseUrlApi, config } = useSelector(
@@ -68,7 +68,7 @@ export const Admins = () => {
                       View
                     </Link>
                     <Link
-                      to={`/edit-admin/${elem.id}`}
+                      to={`/edit-admin/${elem._id}`}
                       className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                     >
                       Edit

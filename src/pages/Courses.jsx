@@ -30,7 +30,7 @@ export const Courses = () => {
           {data.length > 0 ? (
             data.map((elem) => (
               <tr
-                key={elem.id}
+                key={elem._id}
                 className="text-center border-2 border-cyan-800"
               >
                 <td>{elem.title}</td>
@@ -43,7 +43,7 @@ export const Courses = () => {
                     View
                   </Link>
                   <Link
-                    to={`/edit-course/${elem.id}`}
+                    to={`/edit-course/${elem._id}`}
                     className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                   >
                     Edit

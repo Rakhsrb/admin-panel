@@ -1,8 +1,8 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getTeamError, getTeamPending, getTeamSuccess } from "../toolkit/Slicer";
-import axios from "axios";
 
 export const Team = () => {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ export const Team = () => {
             data.length > 0 ? (
               data.map((elem) => (
                 <tr
-                  key={elem.id}
+                  key={elem._id}
                   className="text-center border-2 border-cyan-800"
                 >
                   <td>{elem.name}</td>
@@ -65,7 +65,7 @@ export const Team = () => {
                       View
                     </Link>
                     <Link
-                      to={`/edit-worker/${elem.id}`}
+                      to={`/edit-worker/${elem._id}`}
                       className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                     >
                       Edit

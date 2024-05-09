@@ -54,7 +54,7 @@ export const Services = () => {
             data.length > 0 ? (
               data.map((elem) => (
                 <tr
-                  key={elem.id}
+                  key={elem._id}
                   className="text-center border-2 border-cyan-800"
                 >
                   <td>{elem.title}</td>
@@ -68,7 +68,7 @@ export const Services = () => {
                       View
                     </Link>
                     <Link
-                      to={`/edit-service/${elem.id}`}
+                      to={`/edit-service/${elem._id}`}
                       className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                     >
                       Edit
