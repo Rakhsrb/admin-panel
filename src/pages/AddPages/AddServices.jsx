@@ -36,7 +36,7 @@ const AddServices = () => {
       title: serviceData.title,
       description: serviceData.description,
       category: serviceData.category,
-      images: serviceData.images,
+      images: JSON.stringify(serviceData.images),
     };
 
     try {
@@ -47,7 +47,7 @@ const AddServices = () => {
         category: "",
         images: []
       })
-      navigate("/service");
+      navigate("/services");
       Swal.fire({
         position: "top-end",
         icon: "success",

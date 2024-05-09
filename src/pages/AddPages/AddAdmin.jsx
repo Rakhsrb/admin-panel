@@ -1,11 +1,63 @@
-import { Eye, EyeClosed } from "@phosphor-icons/react";
-import React, { useState } from "react";
+import { Eye, EyeClosed, Password } from "@phosphor-icons/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddAdmin = () => {
   const [showPass, setShowPass] = useState(false);
+  const { userData, baseUrlApi, config } = useSelector(state => state.mainSlice)
+
+  const [adminData, setAdminData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  })
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!userData.isLogin) {
+      navigate("/");
+    }
+  }, []);
+
+
+  const handleGetValues = (e) => {
+    setAdminData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+
+  const AddNewAdmin = async (e) => {
+    e.preventDefault()
+    const adminForm = {
+      name: adminData.title,
+      email: adminData.description,
+      password: adminData.category,
+
+    };
+    try {
+      const response = await axios.post(baseUrlApi + "api/admin/create", adminForm, config)
+      setAdminData({
+        name: "",
+        email: "",
+        password: ""
+      })
+      navigate("/admins");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Yangi Admin Qo'shildi",
+        showConfirmButton: false,
+        timer: 3500,
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
-      <form className="border p-10 rounded-md bg-white">
+      <form className="border p-10 rounded-md bg-white" onSubmit={AddNewAdmin}>
         <h1 className="text-4xl font-semibold mb-7">Yangi admin qo'shish</h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -14,6 +66,8 @@ const AddAdmin = () => {
             </label>
             <input
               required
+              value={adminData.name || ""}
+              onChange={handleGetValues}
               placeholder="Ism Kiriting"
               type="text"
               className="border py-2 px-5 text-md"
@@ -27,6 +81,8 @@ const AddAdmin = () => {
             </label>
             <input
               required
+              value={adminData.email || ""}
+              onChange={handleGetValues}
               placeholder="Email kiriting"
               type="email"
               className="border py-2 px-5 text-md"
@@ -41,10 +97,13 @@ const AddAdmin = () => {
             <div className="border py-1 px-5 text-lg flex items-center gap-3">
               <input
                 required
+                value={adminData.password || ""}
+                onChange={handleGetValues}
                 type={showPass ? "text" : "password"}
                 placeholder="Parol kiriting"
                 className="outline-none w-full"
                 id="adminPassword"
+                name="password"
               />
               <span
                 onClick={() =>
