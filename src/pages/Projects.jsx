@@ -17,8 +17,8 @@ export const Projects = () => {
     async function getData(url) {
       try {
         dispatch(getProjectsPending());
-        const response = await axios.get(url + "api/projects/");
-        dispatch(getProjectsSuccess(response.data));
+        const response = (await axios.get(url + "api/projects/")).data.data;
+        dispatch(getProjectsSuccess(response));
       } catch (error) {
         dispatch(getProjectsError());
         console.log(error);
@@ -26,6 +26,8 @@ export const Projects = () => {
     }
     getData(baseUrlApi);
   }, []);
+
+
 
   return (
     <section className="h-full p-5 bg-cyan-50">
@@ -48,37 +50,45 @@ export const Projects = () => {
           </tr>
         </thead>
         <tbody className="text-center">
-          {data.length > 0 ? (
-            data.map((elem) => (
-              <tr
-                key={elem.id}
-                className="text-center border-2 border-cyan-800"
-              >
-                <td>{elem.title}</td>
-                <td className="flex justify-center">
-                  <img src={elem.image} alt="" />
-                </td>
-                <td>{elem.category}</td>
-                <td>
-                  <Link className="bg-green-900 text-white rounded-md p-2">
-                    View
-                  </Link>
-                  <Link
-                    to={`/edit-portfolio/${elem.id}`}
-                    className="bg-cyan-900 text-white rounded-md p-2 mx-3"
-                  >
-                    Edit
-                  </Link>
-                  <button className="bg-red-800 text-white rounded-md p-2">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
+          {isPending ? (
             <tr className="text-center border-2 border-cyan-800">
-              <td>No Data...</td>
+              <td>Loading...</td>
             </tr>
+          ) : (
+            data.length > 0 ? (
+              data.map((elem) => (
+                <tr
+                  key={elem._id}
+                  className="text-center border-2 border-cyan-800"
+                >
+                  <td>{elem.title}</td>
+                  <td>
+                    {elem.images.length > 0 ?
+                      <img src={elem.images} alt="" />
+                      : "No image"}
+                  </td>
+                  <td>{elem.category}</td>
+                  <td>
+                    <Link className="bg-green-900 text-white rounded-md p-2">
+                      View
+                    </Link>
+                    <Link
+                      to={`/edit-portfolio/${elem._id}`}
+                      className="bg-cyan-900 text-white rounded-md p-2 mx-3"
+                    >
+                      Edit
+                    </Link>
+                    <button className="bg-red-800 text-white rounded-md p-2">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className="text-center border-2 border-cyan-800">
+                <td>No Data...</td>
+              </tr>
+            )
           )}
         </tbody>
       </table>

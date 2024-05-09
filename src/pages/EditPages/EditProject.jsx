@@ -1,42 +1,53 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditProject = () => {
-  const dispatch = useDispatch();
   const path = useNavigate();
-  const { portfolio } = useSelector((state) => state.mainSlice);
-  const { data } = portfolio;
-  const portdolioID = useParams().id;
-  const portdolio = data.find((item) => item.id === +portdolioID);
-  const [editedPortfolio, setEditedPortfolio] = useState({
-    id: portdolioID,
-    title: portdolio.title,
-    price: portdolio.price,
-    description: portdolio.description,
-    image: portdolio.image,
-    category: portdolio.category,
-    url: portdolio.url,
-  });
+  const { userData, baseUrlApi, config } = useSelector((state) => state.mainSlice);
+  const { id } = useParams();
+  const [imgSaved, setImgSaved] = useState(false);
+  const [portfolioData, setPortfolioData] = useState({
+    images: []
+  })
+
+  useEffect(() => {
+    if (!userData.isLogin) {
+      path("/");
+    }
+  }, [userData.isLogin, path]);
+
+  useEffect(() => {
+    async function getDataById() {
+      try {
+        const response = await axios.get(baseUrlApi + `api/projects/${id}`)
+        setPortfolioData(response.data.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getDataById()
+  }, [id])
 
   const getUpdatedValues = (e) => {
-    if (e.target.type === "file") {
-      setEditedPortfolio({
-        ...editedPortfolio,
-        image: URL.createObjectURL(e.target.files[0]),
-      });
-    } else {
-      setEditedPortfolio({
-        ...editedPortfolio,
-        [e.target.name]: e.target.value,
-      });
-    }
+
+    const { name, value } = e.target;
+    setPortfolioData((prevProject) => ({
+      ...prevProject,
+      [name]: value,
+    }));
+    setImgSaved(false);
   };
 
-  const submitUpdatedInfo = (e) => {
-    e.preventDefault();
-    dispatch(updatePortfolioInfo(editedPortfolio));
-    path("/projects");
+  const submitUpdatedInfo = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.put(baseUrlApi + `api/projects/update/${id}`, portfolioData, config)
+      path("/projects");
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
@@ -57,7 +68,7 @@ const EditProject = () => {
               className="border py-2 px-5 text-md"
               id="portfolioTitle"
               name="title"
-              value={editedPortfolio.title}
+              value={portfolioData.title || ""}
               onChange={getUpdatedValues}
             />
           </div>
@@ -71,7 +82,7 @@ const EditProject = () => {
               className="border py-2 px-5 text-md min-h-32"
               id="portfolioDescription"
               name="description"
-              value={editedPortfolio.description}
+              value={portfolioData.description || ""}
               onChange={getUpdatedValues}
             ></textarea>
           </div>
@@ -84,7 +95,7 @@ const EditProject = () => {
                 className="border py-2 px-2"
                 name="category"
                 id="portfolioCategory"
-                value={editedPortfolio.category}
+                value={portfolioData.category || ""}
                 onChange={getUpdatedValues}
               >
                 <option value="" hidden>
@@ -106,7 +117,7 @@ const EditProject = () => {
                 className="border py-1 px-5 text-lg "
                 id="courseUrl"
                 name="url"
-                value={editedPortfolio.url}
+                value={portfolioData.url || ""}
                 onChange={getUpdatedValues}
               />
             </div>

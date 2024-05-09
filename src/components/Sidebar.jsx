@@ -13,7 +13,7 @@ export const Sidebar = () => {
   const navLinks = [
     {
       to: "/",
-      title: "USER",
+      title: 'USER',
       icon: <UserCircle />,
     },
     {

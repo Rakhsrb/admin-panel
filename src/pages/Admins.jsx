@@ -50,34 +50,40 @@ export const Admins = () => {
           </tr>
         </thead>
         <tbody className="text-center">
-          {data.length > 0 ? (
-            data.map((elem) => (
-              <tr
-                key={elem._id}
-                className="text-center border-2 border-cyan-800"
-              >
-                <td>{elem.name}</td>
-                <td>{elem.email}</td>
-                <td>
-                  <Link className="bg-green-900 text-white rounded-md p-2">
-                    View
-                  </Link>
-                  <Link
-                    to={`/edit-admin/${elem.id}`}
-                    className="bg-cyan-900 text-white rounded-md p-2 mx-3"
-                  >
-                    Edit
-                  </Link>
-                  <button className="bg-red-800 text-white rounded-md p-2">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
+          {isPending ? (
             <tr className="text-center border-2 border-cyan-800">
-              <td>No Data...</td>
+              <td>Loading...</td>
             </tr>
+          ) : (
+            data.length > 0 ? (
+              data.map((elem) => (
+                <tr
+                  key={elem._id}
+                  className="text-center border-2 border-cyan-800"
+                >
+                  <td>{elem.name}</td>
+                  <td>{elem.email}</td>
+                  <td>
+                    <Link className="bg-green-900 text-white rounded-md p-2">
+                      View
+                    </Link>
+                    <Link
+                      to={`/edit-admin/${elem.id}`}
+                      className="bg-cyan-900 text-white rounded-md p-2 mx-3"
+                    >
+                      Edit
+                    </Link>
+                    <button className="bg-red-800 text-white rounded-md p-2">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className="text-center border-2 border-cyan-800">
+                <td>No Data...</td>
+              </tr>
+            )
           )}
         </tbody>
       </table>

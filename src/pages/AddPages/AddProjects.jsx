@@ -1,9 +1,67 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddProjects = () => {
+  const { userData, baseUrlApi, config } = useSelector(state => state.mainSlice)
+  const [imgSaved, setImgSaved] = useState(false);
+  const [portfolioData, setPortfolioData] = useState({
+    title: "",
+    description: "",
+    category: "",
+    url: "",
+    images: []
+  })
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!userData.isLogin) {
+      navigate("/");
+    }
+  }, []);
+
+
+  const hangleGetValues = (e) => {
+    const { name, value } = e.target
+    setPortfolioData((prev) => ({ ...prev, [name]: value }))
+    setImgSaved(false)
+  }
+
+
+  const sendPortfolio = async (e) => {
+    e.preventDefault()
+    const portfolioForm = {
+      title: portfolioData.title,
+      description: portfolioData.description,
+      category: portfolioData.category,
+      images: portfolioData.images,
+      url: portfolioData.url
+    };
+    try {
+      const response = await axios.post(baseUrlApi + "api/projects/create", portfolioForm, config)
+      setPortfolioData({
+        title: "",
+        description: "",
+        category: "",
+        url: "",
+        images: []
+      })
+      navigate("/projects");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Yangi Portfolio Qo'shildi",
+        showConfirmButton: false,
+        timer: 3500,
+      });
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
-      <form className="border p-10 rounded-md bg-white">
+      <form className="border p-10 rounded-md bg-white" onSubmit={sendPortfolio}>
         <h1 className="text-4xl font-semibold mb-7">Portfolio Qo'shish</h1>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -11,7 +69,8 @@ const AddProjects = () => {
               Portfolio nomi:
             </label>
             <input
-              required
+              value={portfolioData.title}
+              onChange={hangleGetValues}
               placeholder="Portfolio nomini kiriting"
               type="text"
               className="border py-2 px-5 text-md"
@@ -24,7 +83,8 @@ const AddProjects = () => {
               Portfolio haqida malumot:
             </label>
             <textarea
-              required
+              value={portfolioData.description}
+              onChange={hangleGetValues}
               placeholder="Portfolio haqida malumot kiriting"
               className="border py-2 px-5 text-md min-h-32"
               id="portfolioDescription"
@@ -37,6 +97,8 @@ const AddProjects = () => {
                 Portfolio kategoriyasi:
               </label>
               <select
+                value={portfolioData.category}
+                onChange={hangleGetValues}
                 className="border py-2 px-2"
                 name="category"
                 id="portfolioCategory"
@@ -44,7 +106,7 @@ const AddProjects = () => {
                 <option value="" hidden>
                   Kategoriya tanlang
                 </option>
-                <option value="web">Web</option>
+                <option value="Web">Web</option>
                 <option value="3D Modeling">3D Modeling</option>
                 <option value="Design">Design</option>
                 <option value="AI">AI</option>
@@ -55,7 +117,8 @@ const AddProjects = () => {
                 Porfolio havolasi:
               </label>
               <input
-                required
+                value={portfolioData.url}
+                onChange={hangleGetValues}
                 type="text"
                 className="border py-1 px-5 text-lg "
                 id="courseUrl"
@@ -68,7 +131,7 @@ const AddProjects = () => {
               Rasm:
             </label>
             <input
-              required
+              onChange={hangleGetValues}
               type="file"
               className="border py-1 px-5 text-lg "
               id="courseImage"
