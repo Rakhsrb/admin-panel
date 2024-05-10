@@ -70,7 +70,7 @@ export const Courses = () => {
           Yangi Kurs Qo'shish
         </Link>
       </div>
-      <table className="w-full">
+      <table className="w-full bg-white">
         <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Title</th>
@@ -89,7 +89,7 @@ export const Courses = () => {
               data.map((elem) => (
                 <tr
                   key={elem._id}
-                  className="text-center border-2 border-cyan-800 bg-white"
+                  className="text-center border-2 border-cyan-800"
                 >
                   <td>{elem.title}</td>
                   <td>{elem.description}</td>

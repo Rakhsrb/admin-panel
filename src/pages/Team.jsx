@@ -70,7 +70,7 @@ export const Team = () => {
           Yangi xodimlar qo'shish
         </Link>
       </div>
-      <table className="w-full">
+      <table className="w-full bg-white">
         <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Name</th>
@@ -82,14 +82,14 @@ export const Team = () => {
         <tbody className="text-center">
           {!isError ? (
             isPending ? (
-              <tr className="text-center border-2 border-cyan-800">
+              <tr className="text-center border-2 border-cyan-800 ">
                 <td>Loading...</td>
               </tr>
             ) : data.length > 0 ? (
               data.map((elem) => (
                 <tr
                   key={elem._id}
-                  className="text-center border-2 border-cyan-800 bg-white"
+                  className="text-center border-2 border-cyan-800"
                 >
                   <td>{elem.name}</td>
                   <td className="flex justify-center">

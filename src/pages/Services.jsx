@@ -72,7 +72,7 @@ export const Services = () => {
           Xizmatlar qo'shish
         </Link>
       </div>
-      <table className="w-full">
+      <table className="w-full bg-white">
         <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Title</th>
@@ -85,14 +85,14 @@ export const Services = () => {
         <tbody>
           {!isError ? (
             isPending ? (
-              <tr className="text-center border-2 border-cyan-800">
+              <tr className="text-center border-2 border-cyan-800 ">
                 <td>Loading...</td>
               </tr>
             ) : data.length > 0 ? (
               data.map((elem) => (
                 <tr
                   key={elem._id}
-                  className="text-center border-2 border-cyan-800 bg-white"
+                  className="text-center border-2 border-cyan-800 "
                 >
                   <td>{elem.title}</td>
                   <td className="flex justify-center">
@@ -123,12 +123,12 @@ export const Services = () => {
                 </tr>
               ))
             ) : (
-              <tr className="text-center border-2 border-cyan-800">
+              <tr className="text-center border-2 border-cyan-800 ">
                 <td>No Data...</td>
               </tr>
             )
           ) : (
-            <tr className="text-center border-2 border-cyan-800">
+            <tr className="text-center border-2 border-cyan-800 ">
               <td>Not Found. Some thing went wrong</td>
             </tr>
           )}

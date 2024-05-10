@@ -9,13 +9,13 @@ const AddCourses = () => {
     (state) => state.mainSlice
   );
   const [imgSaved, setImgSaved] = useState(false);
-
   const [courseData, setCourseData] = useState({
     title: "",
     description: "",
-    price: 0,
     image: "",
+    price: "",
   });
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!userData.isLogin) {
@@ -40,7 +40,6 @@ const AddCourses = () => {
         formImageData,
         config
       );
-      console.log(data);
       setCourseData((prevCourse) => ({
         ...prevCourse,
         image: data.images[0],
@@ -56,8 +55,8 @@ const AddCourses = () => {
     const courseForm = {
       title: courseData.title,
       description: courseData.description,
+      image: courseData.image,
       price: courseData.price,
-      image: JSON.stringify(courseData.image),
     };
     try {
       const response = await axios.post(
@@ -65,12 +64,11 @@ const AddCourses = () => {
         courseForm,
         config
       );
-      console.log(response);
       setCourseData({
         title: "",
         description: "",
-        price: 0,
         image: "",
+        price: "",
       });
       navigate("/courses");
       Swal.fire({

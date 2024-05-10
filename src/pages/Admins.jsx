@@ -42,7 +42,7 @@ export const Admins = () => {
           Yangi Admin Qo'shish
         </Link>
       </div>
-      <table className="w-full ">
+      <table className="w-full bg-white">
         <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Name</th>
@@ -59,7 +59,7 @@ export const Admins = () => {
             data.map((elem) => (
               <tr
                 key={elem._id}
-                className="text-center border-2 border-cyan-800 bg-white"
+                className="text-center border-2 border-cyan-800"
               >
                 <td>{elem.name}</td>
                 <td>{elem.email}</td>

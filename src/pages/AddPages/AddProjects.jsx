@@ -23,7 +23,7 @@ const AddProjects = () => {
     }
   }, []);
 
-  const hangleGetValues = (e) => {
+  const handleGetValues = (e) => {
     const { name, value } = e.target;
     setPortfolioData((prev) => ({ ...prev, [name]: value }));
     setImgSaved(false);
@@ -61,7 +61,6 @@ const AddProjects = () => {
       images: portfolioData.images,
       url: portfolioData.url,
     };
-    console.log(portfolioForm);
     try {
       const response = await axios.post(
         baseUrlApi + "api/projects/create",
@@ -87,6 +86,7 @@ const AddProjects = () => {
       console.log(error);
     }
   };
+  
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form
@@ -101,7 +101,7 @@ const AddProjects = () => {
             </label>
             <input
               value={portfolioData.title}
-              onChange={hangleGetValues}
+              onChange={handleGetValues}
               placeholder="Portfolio nomini kiriting"
               type="text"
               className="border py-2 px-5 text-md"
@@ -115,7 +115,7 @@ const AddProjects = () => {
             </label>
             <textarea
               value={portfolioData.description}
-              onChange={hangleGetValues}
+              onChange={handleGetValues}
               placeholder="Portfolio haqida malumot kiriting"
               className="border py-2 px-5 text-md min-h-32"
               id="portfolioDescription"
@@ -129,7 +129,7 @@ const AddProjects = () => {
               </label>
               <select
                 value={portfolioData.category}
-                onChange={hangleGetValues}
+                onChange={handleGetValues}
                 className="border py-2 px-2"
                 name="category"
                 id="portfolioCategory"
@@ -149,7 +149,7 @@ const AddProjects = () => {
               </label>
               <input
                 value={portfolioData.url}
-                onChange={hangleGetValues}
+                onChange={handleGetValues}
                 type="text"
                 className="border py-1 px-5 text-lg "
                 id="courseUrl"
