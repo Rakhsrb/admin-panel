@@ -31,6 +31,18 @@ export const Admins = () => {
     getData(baseUrlApi);
   }, []);
 
+  const deleteAdmin = async (id) => {
+    try {
+      const response = (
+        await axios.delete(baseUrlApi + "api/admin/delete/" + id, config)
+      ).data;
+      const newData = data.filter((item) => item._id !== id);
+      dispatch(getAdminsSuccess(newData));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className="h-screen p-5 bg-cyan-50 overflow-y-auto">
       <div className="h-[20vh] flex justify-between items-center ">
@@ -76,7 +88,10 @@ export const Admins = () => {
                   >
                     Edit
                   </Link>
-                  <button className="bg-red-800 text-white rounded-md p-2">
+                  <button
+                    onClick={() => deleteAdmin(elem._id)}
+                    className="bg-red-800 text-white rounded-md p-2"
+                  >
                     Delete
                   </button>
                 </td>
