@@ -42,7 +42,7 @@ export const Courses = () => {
     if (confirm.isConfirmed) {
       try {
         dispatch(deleteCourse(id));
-        await axios.delete(baseUrlApi + "api/projects/delete/" + id, config);
+        await axios.delete(baseUrlApi + "api/courses/delete/" + id, config);
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
