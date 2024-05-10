@@ -13,7 +13,7 @@ const AddCourses = () => {
   const [courseData, setCourseData] = useState({
     title: "",
     description: "",
-    price: "",
+    price: 0,
     image: "",
   });
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const AddCourses = () => {
       title: courseData.title,
       description: courseData.description,
       price: courseData.price,
-      image: courseData.image,
+      image: JSON.stringify(courseData.image),
     };
     try {
       const response = await axios.post(
@@ -65,10 +65,11 @@ const AddCourses = () => {
         courseForm,
         config
       );
+      console.log(response);
       setCourseData({
         title: "",
         description: "",
-        price: "",
+        price: 0,
         image: "",
       });
       navigate("/courses");

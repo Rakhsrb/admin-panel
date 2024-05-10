@@ -2,27 +2,27 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   deleteCourse,
-  getServicesError,
-  getServicesPending,
-  getServicesSuccess,
+  getCoursesError,
+  getCoursesPending,
+  getCoursesSuccess,
 } from "../toolkit/Slicer";
-import Swal from "sweetalert2";
 
 export const Courses = () => {
   const dispatch = useDispatch();
-  const { services, baseUrlApi } = useSelector((state) => state.mainSlice);
-  const { data, isError, isPending } = services;
+  const { courses, baseUrlApi } = useSelector((state) => state.mainSlice);
+  const { data, isError, isPending } = courses;
 
   useEffect(() => {
     async function getData(url) {
       try {
-        dispatch(getServicesPending());
+        dispatch(getCoursesPending());
         const response = (await axios.get(url + "api/courses/")).data.data;
-        dispatch(getServicesSuccess(response));
+        dispatch(getCoursesSuccess(response));
       } catch (error) {
-        dispatch(getServicesError());
+        dispatch(getCoursesError());
         console.log(error);
       }
     }
@@ -92,6 +92,7 @@ export const Courses = () => {
                   className="text-center border-2 border-cyan-800 bg-white"
                 >
                   <td>{elem.title}</td>
+                  <td>{elem.description}</td>
                   <td>
                     {elem.images.length > 0 ? (
                       <img src={elem.images} alt="" />
@@ -108,7 +109,7 @@ export const Courses = () => {
                       View
                     </Link>
                     <Link
-                      to={`/edit-portfolio/${elem._id}`}
+                      to={`/edit-courses/${elem._id}`}
                       className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                     >
                       Edit
