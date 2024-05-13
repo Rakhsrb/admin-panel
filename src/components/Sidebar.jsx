@@ -7,13 +7,13 @@ import {
   Users,
 } from "@phosphor-icons/react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const Sidebar = () => {
   const navLinks = [
     {
       to: "/",
-      title: 'USER',
+      title: "USER",
       icon: <UserCircle />,
     },
     {
@@ -42,17 +42,18 @@ export const Sidebar = () => {
       icon: <Users />,
     },
   ];
+
   return (
     <aside className="bg-cyan-950">
       <ul className="flex flex-col">
         {navLinks.map((item, index) => (
           <li key={index + 1}>
-            <Link
+            <NavLink
               to={item.to}
               className="flex items-center gap-2 text-xl text-white hover:bg-cyan-700 p-5"
             >
               {item.title} {item.icon}
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>

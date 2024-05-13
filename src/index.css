@@ -39,6 +39,10 @@ body {
   grid-template-columns: 1fr 4fr;
 }
 
+aside ul li a.active {
+  background: #5299a3;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

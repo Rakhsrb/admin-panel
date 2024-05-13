@@ -54,7 +54,11 @@ export const Project = () => {
             <div className="grid grid-cols-3">
               {onePortfolio.images?.map((item, index) => (
                 <div key={index} className="h-[300px]">
-                  <img src={item} alt="" className="h-full w-full object-cover"/>
+                  <img
+                    src={item}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
                 </div>
               ))}
             </div>
