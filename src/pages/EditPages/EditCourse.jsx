@@ -77,7 +77,7 @@ const EditCourse = () => {
               type="text"
               className="border py-2 px-5 text-md"
               id="courseTitle"
-              value={editedCourse.title}
+              value={courseData.title}
               onChange={getUpdatedValues}
               name="title"
             />
@@ -91,7 +91,7 @@ const EditCourse = () => {
               placeholder="Kurs haqida malumot kiriting"
               className="border py-2 px-5 text-md min-h-32"
               id="courseDescription"
-              value={editedCourse.description}
+              value={courseData.description}
               onChange={getUpdatedValues}
               name="description"
             ></textarea>
@@ -106,7 +106,7 @@ const EditCourse = () => {
               placeholder="Kurs narxini kiriting"
               className="border py-1 px-5 text-lg "
               id="coursePrice"
-              value={editedCourse.price}
+              value={courseData.price}
               onChange={getUpdatedValues}
             />
           </div>

@@ -109,7 +109,7 @@ export const Courses = () => {
                       View
                     </Link>
                     <Link
-                      to={`/edit-courses/${elem._id}`}
+                      to={`/edit-course/${elem._id}`}
                       className="bg-cyan-900 text-white rounded-md p-2 mx-3"
                     >
                       Edit
