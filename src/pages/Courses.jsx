@@ -20,6 +20,7 @@ export const Courses = () => {
       try {
         dispatch(getCoursesPending());
         const response = (await axios.get(url + "api/courses/")).data.data;
+        console.log(response);
         dispatch(getCoursesSuccess(response));
       } catch (error) {
         dispatch(getCoursesError());
@@ -92,10 +93,9 @@ export const Courses = () => {
                   className="text-center border-2 border-cyan-800"
                 >
                   <td>{elem.title}</td>
-                  <td>{elem.description}</td>
                   <td>
-                    {elem.images.length > 0 ? (
-                      <img src={elem.images} alt="" />
+                    {elem.image ? (
+                      <img src={elem.image} className="mx-auto" alt="" />
                     ) : (
                       "No image"
                     )}

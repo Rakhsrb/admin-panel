@@ -96,7 +96,7 @@ export const Projects = () => {
                   <td>{elem.title}</td>
                   <td>
                     {elem.images.length > 0 ? (
-                      <img src={elem.images[0]} alt="" />
+                      <img src={elem.images[0]} className="mx-auto" alt="" />
                     ) : (
                       "No image"
                     )}
