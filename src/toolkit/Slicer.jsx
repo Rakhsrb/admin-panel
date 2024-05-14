@@ -33,7 +33,7 @@ const MainSlice = createSlice({
       isPending: false,
       isError: false,
     },
-    baseUrlApi: "https://uitc-backend.onrender.com/",
+    baseUrlApi: "https://bc.rakhsrb.uz/",
     config: {
       headers: {
         Authorization: JSON.parse(localStorage.getItem("token")),
