@@ -144,9 +144,10 @@ const AddCourses = () => {
         </div>
         <button
           type="submit"
-          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
+          disabled={imgSaved}
+          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white font-medium"
         >
-          Qo'shish
+          {imgSaved ? "Loading..." : "Qo'shish"}
         </button>
       </form>
     </section>

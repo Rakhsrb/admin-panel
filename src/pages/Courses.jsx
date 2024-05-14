@@ -12,7 +12,9 @@ import {
 
 export const Courses = () => {
   const dispatch = useDispatch();
-  const { courses, baseUrlApi } = useSelector((state) => state.mainSlice);
+  const { courses, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
   const { data, isError, isPending } = courses;
 
   useEffect(() => {
@@ -20,7 +22,6 @@ export const Courses = () => {
       try {
         dispatch(getCoursesPending());
         const response = (await axios.get(url + "api/courses/")).data.data;
-        console.log(response);
         dispatch(getCoursesSuccess(response));
       } catch (error) {
         dispatch(getCoursesError());
@@ -33,7 +34,6 @@ export const Courses = () => {
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -46,14 +46,12 @@ export const Courses = () => {
         await axios.delete(baseUrlApi + "api/courses/delete/" + id, config);
         Swal.fire({
           title: "Deleted!",
-          text: "Your file has been deleted.",
           icon: "success",
         });
       } catch (error) {
         console.error("Error deleting project:", error);
         Swal.fire({
-          title: "Error!",
-          text: "Failed to delete project.",
+          title: "Failed to delete project!",
           icon: "error",
         });
       }
