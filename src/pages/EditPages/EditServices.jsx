@@ -10,11 +10,12 @@ const EditService = () => {
   );
   const { id } = useParams();
   const [imgSaved, setImgSaved] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [serviceData, setSericeData] = useState({
     title: "",
     description: "",
     category: "",
-    images: [],
+    image: "",
   });
 
   useEffect(() => {
@@ -55,6 +56,27 @@ const EditService = () => {
       path("/services");
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    try {
+      const formImageData = new FormData();
+      const file = e.target.files[0];
+      formImageData.append("images", file);
+      setImgSaved(true);
+      const { data } = await axios.post(
+        baseUrlApi + "api/uploads",
+        formImageData,
+        config
+      );
+      setSericeData((prevCourse) => ({
+        ...prevCourse,
+        image: data.images[0],
+      }));
+      setImgSaved(false);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -126,15 +148,16 @@ const EditService = () => {
               className="border py-1 px-5 text-lg "
               id="serviceImage"
               name="image"
-              onChange={getUpdatedValues}
+              onChange={handleFileChange}
             />
           </div>
         </div>
         <button
+          disabled={imgSaved}
           type="submit"
-          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
+          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white font-medium"
         >
-          taxrirlash
+          {imgSaved ? "Loading..." : "Taxrirlash"}
         </button>
       </form>
     </section>

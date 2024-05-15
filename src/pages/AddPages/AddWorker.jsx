@@ -5,15 +5,17 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddWorker = () => {
-  const { userData, baseUrlApi, config } = useSelector(state => state.mainSlice)
+  const { userData, baseUrlApi, config } = useSelector(
+    (state) => state.mainSlice
+  );
   const [imgSaved, setImgSaved] = useState(false);
   const [workerData, setWorkerData] = useState({
     name: "",
     job: "",
-    image: ""
-  })
+    image: "",
+  });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userData.isLogin) {
@@ -21,28 +23,30 @@ const AddWorker = () => {
     }
   }, []);
 
-
   const handleGetValues = (e) => {
-    const { name, value } = e.target
-    setWorkerData((prev) => ({ ...prev, [name]: value }))
-    setImgSaved(false)
-  }
-
+    const { name, value } = e.target;
+    setWorkerData((prev) => ({ ...prev, [name]: value }));
+    setImgSaved(false);
+  };
 
   const sendWorker = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const workerForm = {
       name: workerData.name,
       job: workerData.job,
       image: workerData.image,
     };
     try {
-      const response = await axios.post(baseUrlApi + "api/team/create", workerForm, config)
+      const response = await axios.post(
+        baseUrlApi + "api/team/create",
+        workerForm,
+        config
+      );
       setWorkerData({
         name: "",
         job: "",
-        image: ""
-      })
+        image: "",
+      });
       navigate("/team");
       Swal.fire({
         position: "top-end",
@@ -52,9 +56,31 @@ const AddWorker = () => {
         timer: 3500,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
+  const handleFileChange = async (e) => {
+    try {
+      const formImageData = new FormData();
+      const file = e.target.files[0];
+      formImageData.append("images", file);
+      setImgSaved(true);
+      const { data } = await axios.post(
+        baseUrlApi + "api/uploads",
+        formImageData,
+        config
+      );
+      setCourseData((prevCourse) => ({
+        ...prevCourse,
+        image: data.images[0],
+      }));
+      setImgSaved(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form className="border p-10 rounded-md bg-white" onSubmit={sendWorker}>
@@ -93,18 +119,20 @@ const AddWorker = () => {
               Rasmi:
             </label>
             <input
-              onChange={handleGetValues}
+              onChange={handleFileChange}
               type="file"
               className="border py-1 px-5 text-lg"
               id="workerImage"
+              name="image"
             />
           </div>
         </div>
         <button
+          disabled={imgSaved}
           type="submit"
-          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
+          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white font-medium"
         >
-          Qo'shish
+          {imgSaved ? "Loading..." : "Qo'shish"}
         </button>
       </form>
     </section>

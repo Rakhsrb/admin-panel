@@ -44,16 +44,42 @@ const EditProject = () => {
   const submitUpdatedInfo = async (e) => {
     e.preventDefault();
     try {
+      setImgSaved(true);
       const response = await axios.put(
         baseUrlApi + `api/projects/update/${id}`,
         portfolioData,
         config
       );
+      setImgSaved(false);
       path("/projects");
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleFileChange = async (e) => {
+    try {
+      const formImageData = new FormData();
+      const files = e.target.files;
+      for (let i = 0; i < files.length; i++) {
+        formImageData.append("images", files[i]);
+      }
+      setImgSaved(true);
+      const { data } = await axios.post(
+        baseUrlApi + "api/uploads",
+        formImageData,
+        config
+      );
+      setPortfolioData((prevFormData) => ({
+        ...prevFormData,
+        images: [...prevFormData.images, ...data.images],
+      }));
+      setImgSaved(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form
@@ -132,19 +158,21 @@ const EditProject = () => {
               Rasm:
             </label>
             <input
+              multiple
               type="file"
               className="border py-1 px-5 text-lg "
               id="courseImage"
               name="image"
-              onChange={getUpdatedValues}
+              onChange={handleFileChange}
             />
           </div>
         </div>
         <button
+          disabled={imgSaved}
           type="submit"
-          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
+          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white font-medium"
         >
-          taxrirlash
+          {imgSaved ? "Loading..." : "Taxrirlash"}
         </button>
       </form>
     </section>

@@ -62,6 +62,7 @@ const AddProjects = () => {
       url: portfolioData.url,
     };
     try {
+      setImgSaved(true);
       const response = await axios.post(
         baseUrlApi + "api/projects/create",
         portfolioForm,
@@ -74,6 +75,7 @@ const AddProjects = () => {
         url: "",
         images: [],
       });
+      setImgSaved(false);
       navigate("/projects");
       Swal.fire({
         position: "top-end",
@@ -86,7 +88,7 @@ const AddProjects = () => {
       console.log(error);
     }
   };
-  
+
   return (
     <section className="bg-[#ecfeff] flex flex-col justify-center items-center">
       <form
@@ -137,9 +139,9 @@ const AddProjects = () => {
                 <option value="" hidden>
                   Kategoriya tanlang
                 </option>
-                <option value="Web">Web</option>
-                <option value="3D Modeling">3D Modeling</option>
-                <option value="Design">Design</option>
+                <option value="website">Web</option>
+                <option value="modeling">3D Modeling</option>
+                <option value="brending">Design</option>
                 <option value="AI">AI</option>
               </select>
             </div>
@@ -162,6 +164,7 @@ const AddProjects = () => {
               Rasm:
             </label>
             <input
+              multiple
               onChange={handleFileChange}
               type="file"
               className="border py-1 px-5 text-lg "
@@ -171,10 +174,11 @@ const AddProjects = () => {
           </div>
         </div>
         <button
+          disabled={imgSaved}
           type="submit"
-          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
+          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white font-medium"
         >
-          Qo'shish
+          {imgSaved ? "Loading..." : "qo'shish"}
         </button>
       </form>
     </section>

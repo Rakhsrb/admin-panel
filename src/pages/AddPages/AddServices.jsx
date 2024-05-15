@@ -13,7 +13,7 @@ const AddServices = () => {
     title: "",
     description: "",
     category: "",
-    images: "",
+    image: "",
   });
 
   const navigate = useNavigate();
@@ -25,31 +25,8 @@ const AddServices = () => {
   }, []);
 
   const handleGetValues = async (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      try {
-        const formImageData = new FormData();
-        const file = files[0];
-        formImageData.append("images", file);
-        setImgSaved(true);
-        const { data } = await axios.post(
-          baseUrlApi + "api/uploads",
-          formImageData,
-          config
-        );
-        console.log(data);
-        setCourseData((prevCourse) => ({
-          ...prevCourse,
-          images: data.images[0],
-        }));
-        setImgSaved(false);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      setServiceData((prev) => ({ ...prev, [name]: value }));
-    }
-    setImgSaved(false);
+    const { name, value } = e.target;
+    setServiceData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = async (e) => {
@@ -63,8 +40,7 @@ const AddServices = () => {
         formImageData,
         config
       );
-      console.log(data);
-      setCourseData((prevCourse) => ({
+      setServiceData((prevCourse) => ({
         ...prevCourse,
         image: data.images[0],
       }));
@@ -76,25 +52,20 @@ const AddServices = () => {
 
   const sendService = async (e) => {
     e.preventDefault();
-    const serviceForm = {
-      title: serviceData.title,
-      description: serviceData.description,
-      category: serviceData.category,
-      images: JSON.stringify(serviceData.images),
-    };
-
     try {
+      setImgSaved(true);
       const response = await axios.post(
         baseUrlApi + "api/services/create",
-        serviceForm,
+        serviceData,
         config
       );
       setServiceData({
         title: "",
         description: "",
         category: "",
-        images: "",
+        image: "",
       });
+      setImgSaved(false);
       navigate("/services");
       Swal.fire({
         position: "top-end",
@@ -173,10 +144,11 @@ const AddServices = () => {
           </div>
         </div>
         <button
+          disabled={imgSaved}
           type="submit"
-          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white uppercase font-medium"
+          className="py-2 bg-green-700 px-10 mt-10 w-full rounded-sm text-white font-medium"
         >
-          Qo'shish
+          {imgSaved ? "Loading..." : " Qo'shish"}
         </button>
       </form>
     </section>

@@ -34,7 +34,6 @@ export const Projects = () => {
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -47,14 +46,12 @@ export const Projects = () => {
         dispatch(deleteProject(id));
         Swal.fire({
           title: "Deleted!",
-          text: "Your file has been deleted.",
           icon: "success",
         });
       } catch (error) {
         console.error("Error deleting project:", error);
         Swal.fire({
           title: "Error!",
-          text: "Failed to delete project.",
           icon: "error",
         });
       }
@@ -62,7 +59,7 @@ export const Projects = () => {
   };
 
   return (
-    <section className="h-full p-5 bg-cyan-50">
+    <section className="h-screen p-5 bg-cyan-50 overflow-y-auto">
       <div className="h-[20vh] flex justify-between items-center">
         <h1 className="text-5xl">Portfolio</h1>
         <Link
@@ -72,7 +69,7 @@ export const Projects = () => {
           Portfolio Qo'shish
         </Link>
       </div>
-      <table className="w-full bg-white">
+      <table className="w-full bg-white mb-32">
         <thead className="border-2 border-cyan-800">
           <tr>
             <th className="p-4">Title</th>

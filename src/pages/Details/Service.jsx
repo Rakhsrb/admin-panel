@@ -30,7 +30,7 @@ const Service = () => {
   }, [id]);
 
   return (
-    <section className="h-full">
+    <section className="h-screen overflow-y-auto">
       <div className="flex flex-col gap-0">
         {isPending ? (
           "Loading"
@@ -45,15 +45,11 @@ const Service = () => {
             <h1 className="p-10 text-2xl text-white odd">
               <span>Category:</span> {oneService.category}
             </h1>
-            <div className="grid grid-cols-3">
-              {/* {oneService?.images?.length > 2
-                ? oneService?.images?.map((item, index) => (
-                    <div key={index} className="h-[300px]">
-                      <img src={item} alt="" />
-                    </div>
-                  ))
-                : "no one image"} */}
-            </div>
+            {oneService.image ? (
+              <img src={oneService.image} className="w-full" alt="" />
+            ) : (
+              "no one image"
+            )}
           </>
         )}
       </div>
